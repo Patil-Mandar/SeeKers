@@ -1,18 +1,44 @@
 const mongoose = require('mongoose')
+const listOfData = require('../seeds/seedHelper')
+
 
 const ProfileSchema = mongoose.Schema({
-    id:Number,
     name:String,
     mailID:String,
-    gender:String,
+    gender:{
+        type:mongoose.Schema.Types.String,
+        enum:listOfData.genders
+    },
     age:Number,
-    currentLocation:String,
-    degree:String,
-    major:String,
+    currentLocation:{
+        type:mongoose.Schema.Types.String,
+        enum:listOfData.locations
+    },
+    degree:{
+        type:mongoose.Schema.Types.String,
+        enum:listOfData.degrees
+    },
+    major:{
+        type:mongoose.Schema.Types.String,
+        enum:listOfData.majors
+    },
     jobExperience:Number,
-    skills:Array,
-    college:String,
-    jobHistory:Array
+    skills:[
+        {
+            type:mongoose.Schema.Types.String,
+            enum:listOfData.skills
+        }
+    ],
+    college:{
+        type:mongoose.Schema.Types.String,
+        enum:listOfData.colleges
+    },
+    jobHistory:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'Job'
+        }
+    ]
 })
 
 module.exports = mongoose.model('Profile',ProfileSchema)

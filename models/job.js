@@ -1,20 +1,56 @@
 const mongoose = require('mongoose')
+const listOfData = require('../seeds/seedHelper')
+
 
 const JobSchema = mongoose.Schema({
-    id:Number,
-    company:String,
-    jobTitle:String,
-    category:String,
-    type:String,
-    mode:String,
-    salary:Number,
-    minAge:Number,
-    minExperience:Number,
-    reqDegree:Array,
-    reqMajor:Array,
-    reqSkills:Array,
-    goodToHaveSkills:Array,
-    location:String
+    company: {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.companies
+    },
+    jobTitle: String,
+    category: {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.categories
+    },
+    type: {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.types
+    },
+    mode: {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.modes
+    },
+    salary: Number,
+    minAge: Number,
+    minExperience: Number,
+    reqDegree: [
+        {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.degrees
+        }
+    ],
+    reqMajor: [
+        {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.majors
+        }
+    ],
+    reqSkills: [
+        {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.skills
+        }
+    ],
+    goodToHaveSkills: [
+        {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.skills
+        }
+    ],
+    location: {
+        type: mongoose.Schema.Types.String,
+        enum: listOfData.locations
+    }
 })
 
-module.exports = mongoose.model('Job',JobSchema)
+module.exports = mongoose.model('Job', JobSchema)
