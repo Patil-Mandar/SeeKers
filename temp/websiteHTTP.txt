@@ -1,0 +1,21 @@
+GET     / and /jobseeker            home page of website which is oriented for jobseekers. Explaing how the process works.
+                                    User can register or login as jobseeker. Also go to Recruiter page.
+                    
+
+GET     /jobseeker/register         register form with google/linkedIn for job seeker
+POST    /jobseeker/register         add new jobseeker
+GET     /jobseeker/login            login form with google/linkedIn for job seeker
+POST    /jobseeker/login            logging in the user
+GET     /jobseeker/:id              profile page for jobseeker
+GET     /jobseeker/:id/profile      form to add detials
+POST    /jobseeker/:id/profile      post the data
+GET     /jobseeker/:id/edit         edit deatials
+POST    /jobseeker/:id/edit         post the edit
+GET     /jobseeker/:id/recommend        recommend top jobseeker
+         
+    
+
+GET     /recruiter                  home page of website which is oriented for recruiters. Explaing how the process works.
+                                    User can register or login as recruiter. Also go to jobseekers page.
+
+GET     /recruiter/register         register form with google/linkedIn for recruiter
