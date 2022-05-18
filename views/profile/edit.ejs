@@ -1,0 +1,16 @@
+<% layout('/layouts/boilerplate')  %> 
+
+
+<h1>Edit Profile</h1>
+<form action="/profile/<%=profile._id%>?_method=PUT" method="POST">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="profile[name]" value="<%=profile.name %>">
+    </div>
+    <div>
+        <label for="degree">Degree</label>
+        <input type="text" id="degree" name="profile[degree]" value="<%= profile.degree%>">
+    </div>
+    <button>Update Profile</button>
+</form>
+<a href="/profile/<%= profile._id%>">Back To Profile</a>    

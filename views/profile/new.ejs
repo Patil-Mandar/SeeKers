@@ -1,0 +1,15 @@
+<% layout('/layouts/boilerplate')  %> 
+
+
+<form action="/profile" method="POST">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="profile[name]">
+    </div>
+    <div>
+        <label for="location">Degree</label>
+        <input type="text" id="location" name="profile[degree]">
+    </div>
+    <button>Add Profile</button>
+</form>
+<a href="/profile">All Profiles</a>
