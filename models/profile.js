@@ -3,6 +3,10 @@ const listOfData = require('../seeds/seedHelper')
 
 
 const ProfileSchema = mongoose.Schema({
+    author:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Jobseeker'
+    },
     name:String,
     mailID:String,
     gender:{

@@ -1,0 +1,75 @@
+<% layout('/layouts/boilerplate')  %> 
+
+
+<form action="/profile" method="POST">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="profile[name]">
+    </div>
+    <div>
+        <label for="mailID">MailID</label>
+        <input type="text" id="mailID" name="profile[mailID]">
+    </div>
+    <div>
+        <label for="age">Age</label>
+        <input type="number" id="age" name="profile[age]">
+    </div>
+    <div>
+        <label for="currentLocation">Current Location</label>
+        <select name="profile[currentLocation]" id="currentLocation">
+            <% for(let ele of listOfData.locations){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="degree">Degree</label>
+        <select name="profile[degree]" id="degree">
+            <% for(let ele of listOfData.degrees){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="major">Major</label>
+        <select name="profile[major]" id="major">
+            <% for(let ele of listOfData.majors){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="jobExperience">Job Experience (in year(s))</label>
+        <input type="number" id="jobExperience" name="profile[jobExperience]">
+    </div>
+    <div>
+        <label for="skills[0]">Skills 1</label>
+        <select name="profile[skills][0]" id="skills[0]">
+            <% for(let ele of listOfData.skills){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select><br>
+        <label for="skills[1]">Skills 2</label>
+        <select name="profile[skills][1]" id="skills[1]">
+            <% for(let ele of listOfData.skills){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select><br>
+        <label for="skills[2]">Skills 3</label>
+        <select name="profile[skills][2]" id="skills[2]">
+            <% for(let ele of listOfData.skills){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="college">College</label>
+        <select name="profile[college]" id="college">
+            <% for(let ele of listOfData.colleges){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <button>Add Profile</button>
+</form>
+<a href="/profile">All Profiles</a>

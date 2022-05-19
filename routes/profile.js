@@ -1,31 +1,33 @@
 const express = require('express')
 const router = express.Router()
 const CatchAsync = require('../utils/CatchAsync')
+const listOfData = require('../seeds/seedHelper')
 const Profile = require('../models/profile')
-const {validateProfile} = require('../middleware')
+const {validateProfile,isLoggedIn} = require('../middleware')
 
-router.get('/',CatchAsync(async(req,res)=>{
-    const profiles = await Profile.find({})
-    res.render('profile/index',{profiles})
+// router.get('/',CatchAsync(async(req,res)=>{
+//     const profiles = await Profile.find({})
+//     res.render('profile/index',{profiles})
+// }))
+
+router.get('/new', CatchAsync(async (req,res)=>{
+    res.render('jobseeker/new',{listOfData})
 }))
 
-router.get('/new',async (req,res)=>{
-    res.render('profile/new')
-})
+// router.get('/:id',CatchAsync(async(req,res)=>{
+//     const {id} = req.params
+//     const profile = await Profile.findById(id)
+//     if(!profile){
+//         return res.redirect('/profile')
+//     }
+//     res.render('profile/show',{profile})
+// }))
 
-router.get('/:id',CatchAsync(async(req,res)=>{
-    const {id} = req.params
-    const profile = await Profile.findById(id)
-    if(!profile){
-        return res.redirect('/profile')
-    }
-    res.render('profile/show',{profile})
-}))
-
-router.post('/',validateProfile, CatchAsync(async (req, res) => {
-    const profile = new Profile(req.body.profile);
+router.post('/', CatchAsync(async (req, res) => {
+    const profile = new Profile(req.body.profile)
+    profile.author = req.user._id
     await profile.save();
-    res.redirect(`/profile/${profile._id}`)
+    res.redirect('/dashboard')
 }))
 
 router.get('/:id/edit',CatchAsync( async (req, res) => {
