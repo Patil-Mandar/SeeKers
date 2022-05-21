@@ -12,8 +12,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 const ExpressError = require('./utils/ExpressError')
 const CatchAsync = require('./utils/CatchAsync')
 const Jobseeker = require('./models/jobseeker')
+const Profile = require('./models/profile')
 const profileRoutes = require('./routes/profile')
 const jobseekerRoutes = require('./routes/jobseeker')
+const {profile} = require('console')
 
 
 const app = express()
@@ -78,8 +80,20 @@ app.use('/',jobseekerRoutes)
 
 app.get('/dashboard',async (req,res)=>{
     const user = req.user
-    res.render('jobseeker/dashboard',{user})
+    if(user.profile){
+        const profile = await Profile.findById(user.profile)
+        res.render('jobseeker/dashboard',{user,profile})
+    }else{
+        res.render('jobseeker/dashboard',{user,profile:null})
+    }
 })
+
+// app.get('/dashboard/:id',async(req,res)=>{
+//     const { id } = req.params;
+//     const user = req.user
+//     const profile = await Profile.findById(id)
+//     res.render('jobseeker/dashboard',{user,profile})
+// })
 
 app.use('/profile',profileRoutes)
 

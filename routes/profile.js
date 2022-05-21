@@ -4,6 +4,7 @@ const CatchAsync = require('../utils/CatchAsync')
 const listOfData = require('../seeds/seedHelper')
 const Profile = require('../models/profile')
 const {validateProfile,isLoggedIn} = require('../middleware')
+const jobseeker = require('../models/jobseeker')
 
 // router.get('/',CatchAsync(async(req,res)=>{
 //     const profiles = await Profile.find({})
@@ -25,26 +26,29 @@ router.get('/new', CatchAsync(async (req,res)=>{
 
 router.post('/', CatchAsync(async (req, res) => {
     const profile = new Profile(req.body.profile)
-    profile.author = req.user._id
-    await profile.save();
-    res.redirect('/dashboard')
+    // profile.author = req.user._id
+    await profile.save()
+    const user = req.user
+    user.profile = profile._id
+    await jobseeker.findOneAndUpdate(user._id,user)
+    res.redirect(`/dashboard/`)
 }))
 
-router.get('/:id/edit',CatchAsync( async (req, res) => {
-    const profile = await Profile.findById(req.params.id)
-    res.render('profile/edit', { profile });
+router.get('/edit',CatchAsync( async (req, res) => {
+    const profile = await Profile.findById(req.user.profile)
+    res.render('profile/edit', {listOfData,profile})
 }))
 
-router.put('/:id',validateProfile,CatchAsync(async (req, res) => {
-    const { id } = req.params;
-    const profile = await Profile.findByIdAndUpdate(id, { ...req.body.profile });
-    res.redirect(`/profile/${profile._id}`)
+router.put('/edit',CatchAsync(async (req, res) => {0
+    const id = req.user.profile;
+    const profile = await Profile.findByIdAndUpdate(id, {...req.body.profile})
+    res.redirect(`/dashboard/`)
 }))
 
-router.delete('/:id', CatchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Profile.findByIdAndDelete(id);
-    res.redirect('/profile');
-}))
+// router.delete('/:id', CatchAsync(async (req, res) => {
+//     const { id } = req.params;
+//     await Profile.findByIdAndDelete(id);
+//     res.redirect('/profile');
+// }))
 
 module.exports = router
