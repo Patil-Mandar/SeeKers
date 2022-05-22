@@ -16,6 +16,15 @@
         <input type="number" id="age" name="profile[age]" value="<%= profile.age %>">
     </div>
     <div>
+        <label for="gender">Gender</label>
+        <select name="profile[gender]" id="gender">
+            <% for(let ele of listOfData.genders){ %>
+                <option value="<%= ele %>" <% if(ele == profile.gender){%> selected <%}%>
+                    ><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
         <label for="currentLocation">Current Location</label>
         <select name="profile[currentLocation]" id="currentLocation">
             <% for(let ele of listOfData.locations){ %>

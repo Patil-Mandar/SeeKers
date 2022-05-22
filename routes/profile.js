@@ -3,7 +3,7 @@ const router = express.Router()
 const CatchAsync = require('../utils/CatchAsync')
 const listOfData = require('../seeds/seedHelper')
 const Profile = require('../models/profile')
-const {validateProfile,isLoggedIn} = require('../middleware')
+const {validateProfile,isLoggedIn,createdProfile} = require('../middleware')
 const jobseeker = require('../models/jobseeker')
 
 // router.get('/',CatchAsync(async(req,res)=>{
@@ -11,8 +11,8 @@ const jobseeker = require('../models/jobseeker')
 //     res.render('profile/index',{profiles})
 // }))
 
-router.get('/new', CatchAsync(async (req,res)=>{
-    res.render('jobseeker/new',{listOfData})
+router.get('/new',isLoggedIn,CatchAsync(async (req,res)=>{
+    res.render('profile/new',{listOfData})
 }))
 
 // router.get('/:id',CatchAsync(async(req,res)=>{
@@ -24,22 +24,21 @@ router.get('/new', CatchAsync(async (req,res)=>{
 //     res.render('profile/show',{profile})
 // }))
 
-router.post('/', CatchAsync(async (req, res) => {
+router.post('/',isLoggedIn,validateProfile, CatchAsync(async (req, res) => {
     const profile = new Profile(req.body.profile)
-    // profile.author = req.user._id
     await profile.save()
     const user = req.user
     user.profile = profile._id
     await jobseeker.findOneAndUpdate(user._id,user)
-    res.redirect(`/dashboard/`)
+    res.redirect('/dashboard/')
 }))
 
-router.get('/edit',CatchAsync( async (req, res) => {
+router.get('/edit',isLoggedIn,createdProfile,CatchAsync( async (req, res) => {
     const profile = await Profile.findById(req.user.profile)
     res.render('profile/edit', {listOfData,profile})
 }))
 
-router.put('/edit',CatchAsync(async (req, res) => {0
+router.put('/edit',isLoggedIn,createdProfile,validateProfile,CatchAsync(async (req, res) => {0
     const id = req.user.profile;
     const profile = await Profile.findByIdAndUpdate(id, {...req.body.profile})
     res.redirect(`/dashboard/`)

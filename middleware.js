@@ -14,10 +14,17 @@ module.exports.validateProfile = (req, res, next) => {
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (req.user) {
-        console.log(req.user)
         next();
     } else {
         throw new ExpressError('Login First', 401)
 
+    }
+}
+
+module.exports.createdProfile = (req,res,next)=>{
+    if(req.user.profile){
+        next();
+    }else{
+        throw new ExpressError('You need to complete the Profile first',401)
     }
 }

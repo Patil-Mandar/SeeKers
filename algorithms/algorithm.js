@@ -1,14 +1,8 @@
 const { similarity } = require('./similarityAlgo')
-// const { Jobs, Users } = require('../temp/data')
 let Job = require('../models/job')
-let User = require('../models/profile')
+let Profile = require('../models/profile')
 let Jobs = []
 let Users = []
-
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/JobRecommendationSystem')
-    .then(data => console.log('Database connected Algo'))
-    .catch(err => console.log('Database connection failed Algo'))
 
 
 const isEligible = (user, job) => {
@@ -57,7 +51,6 @@ const recommendKjobs = async (user, k) => {
     //returns k most recommended jobs for user
 
     Jobs = await Job.find()
-    Users = await User.find()
     let preferenceList = {}
     let canditateSet = getJobsCandidateSet(user)
 
@@ -74,7 +67,7 @@ const recommendKusers = async (job, k) => {
     //returns k most recommended jobs for user
 
     Jobs = await Job.find()
-    Users = await User.find()
+    Users = await Profile.find()
     let preferenceList = {}
     let canditateSet = getUsersCandidateSet(job)
 
@@ -87,3 +80,11 @@ const recommendKusers = async (job, k) => {
 }
 
 module.exports = { recommendKjobs }
+
+// const test = async ()=>{
+//     const profile = await Profile.findById('628a01656df50f8d37eb8143')
+//     const ans = await recommendKjobs(profile,5)
+//     console.log(ans)
+// }
+
+// test()

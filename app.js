@@ -8,14 +8,20 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
+const LocalStrategy = require('passport-local')
 
 const ExpressError = require('./utils/ExpressError')
 const CatchAsync = require('./utils/CatchAsync')
 const Jobseeker = require('./models/jobseeker')
 const Profile = require('./models/profile')
+const Job = require('./models/job')
+const Recruiter = require('./models/recruiter')
 const profileRoutes = require('./routes/profile')
+const recruiterRoutes = require('./routes/recruiter')
 const jobseekerRoutes = require('./routes/jobseeker')
-const {profile} = require('console')
+const {recommendKjobs} = require('./algorithms/algorithm')
+const {validateProfile,isLoggedIn,createdProfile} = require('./middleware')
+
 
 
 const app = express()
@@ -57,12 +63,13 @@ passport.use(new GoogleStrategy({
   },
   async function(accessToken, refreshToken, profile, cb) {
     await Jobseeker.findOrCreate(
-        {googleId: profile.id,name:profile.displayName,photo:profile.photos[0].value},
+        {googleId: profile.id,name:profile.displayName,photo:profile.photos[0].value,email:profile.emails[0].value},
         function (err, user) {
             return cb(err, user);
         })
   }
 ))
+passport.use(new LocalStrategy(Recruiter.authenticate()))
 passport.serializeUser(function(user, done) {done(null, user)})
 passport.deserializeUser(function(user, done) {done(null, user)})
 
@@ -77,8 +84,9 @@ app.use((req,res,next)=>{
 })
 
 app.use('/',jobseekerRoutes)
+app.use('/recruiter',recruiterRoutes)
 
-app.get('/dashboard',async (req,res)=>{
+app.get('/dashboard',isLoggedIn,CatchAsync(async (req,res)=>{
     const user = req.user
     if(user.profile){
         const profile = await Profile.findById(user.profile)
@@ -86,20 +94,33 @@ app.get('/dashboard',async (req,res)=>{
     }else{
         res.render('jobseeker/dashboard',{user,profile:null})
     }
+}))
+
+app.get('/recruiter/dashboard',async(req,res)=>{
+    // const user = await Recruiter.findById(req.user.id).populate('jobs')
+    const user = await Recruiter.findById('628a8c00e0698f83727de698').populate('jobs')
+    res.render('recruiter/dashboard',{user})
 })
 
-// app.get('/dashboard/:id',async(req,res)=>{
-//     const { id } = req.params;
-//     const user = req.user
-//     const profile = await Profile.findById(id)
-//     res.render('jobseeker/dashboard',{user,profile})
-// })
+app.get('/analysis',isLoggedIn,createdProfile,CatchAsync(async(req,res)=>{
+    const profile = await Profile.findById(req.user.profile)
+    const preferenceList = await recommendKjobs(profile,5)
+    const jobs = []
+    for(let i of preferenceList){
+        let job = await Job.findById(i[0])
+        jobs.push(job)
+    }
+    res.render('jobseeker/analysis',{jobs})
+}))
 
 app.use('/profile',profileRoutes)
 
 
 app.get('/',(req,res)=>{
     res.render('home')
+})
+app.get('/recruiter',(req,res)=>{
+    res.render('recruiter/home')
 })
 
 

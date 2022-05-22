@@ -1,0 +1,14 @@
+<% layout('/layouts/recruiterBoilerplate')  %> 
+
+    <h4 class="card-title">Login</h4>
+    <form class="needs-validation form" action="/recruiter/login" method="post">
+        <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required autofocus>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+        </div>
+        <button class="btn btn-success w-100">Login</button>
+    </form>

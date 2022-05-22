@@ -19,26 +19,26 @@ function getRandomSubarray(arr, size) {
 }
 
 const seedDB = async () => {
-    await Profile.deleteMany({})
+    // await Profile.deleteMany({})
     await Job
     .deleteMany({})
 
-    for(let i=0;i<100;i++){
-        let prof = new Profile({
-            id:i,
-            name:'Maruti Patil',
-            mailID:'mandar@patil.org',
-            gender: getRandomSubarray(listOfData.genders,1)[0],
-            age:18 + Math.floor(Math.random() *20),
-            degree: getRandomSubarray(listOfData.degrees,1)[0],
-            major:getRandomSubarray(listOfData.majors,1)[0],
-            jobExperience: Math.floor(Math.random() * 5),
-            skills:getRandomSubarray(listOfData.skills,5+Math.floor(Math.random() * 9)),
-            college:getRandomSubarray(listOfData.colleges,1)[0],
-            currentLocation:getRandomSubarray(listOfData.locations,1)[0],
-            jobHistory: [1,2]
-        })
-        await prof.save()
+    for(let i=0;i<10000;i++){
+    //     let prof = new Profile({
+    //         id:i,
+    //         name:'Maruti Patil',
+    //         mailID:'mandar@patil.org',
+    //         gender: getRandomSubarray(listOfData.genders,1)[0],
+    //         age:18 + Math.floor(Math.random() *20),
+    //         degree: getRandomSubarray(listOfData.degrees,1)[0],
+    //         major:getRandomSubarray(listOfData.majors,1)[0],
+    //         jobExperience: Math.floor(Math.random() * 5),
+    //         skills:getRandomSubarray(listOfData.skills,5+Math.floor(Math.random() * 9)),
+    //         college:getRandomSubarray(listOfData.colleges,1)[0],
+    //         currentLocation:getRandomSubarray(listOfData.locations,1)[0],
+    //         jobHistory: [1,2]
+    //     })
+    //     // await prof.save()
         let job = new Job({
             id:i,
             company:getRandomSubarray(listOfData.companies,1)[0],

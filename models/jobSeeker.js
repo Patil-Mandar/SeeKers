@@ -5,16 +5,11 @@ const findOrCreate = require("mongoose-findorcreate")
 const JobseekerSchema = mongoose.Schema({
     name:String,
     photo:String,
+    email:String,
     profile:{
         type:mongoose.Schema.Types.ObjectId,
         req:'Profile'
-    },
-    jobs:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Job'
-        }
-    ]
+    }
 })
 
 JobseekerSchema.plugin(passportLocalMongoose)

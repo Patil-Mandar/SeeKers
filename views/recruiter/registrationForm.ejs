@@ -1,0 +1,18 @@
+<% layout('/layouts/recruiterBoilerplate')  %> 
+
+    <h4 >Register</h4>
+    <form action="/recruiter/register" method="post" novalidate>
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="emailID" required>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button>Register</button>
+    </form>
