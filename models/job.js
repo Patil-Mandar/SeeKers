@@ -50,6 +50,10 @@ const JobSchema = mongoose.Schema({
     location: {
         type: mongoose.Schema.Types.String,
         enum: listOfData.locations
+    },
+    author:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Recruiter'
     }
 })
 

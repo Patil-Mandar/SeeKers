@@ -32,8 +32,7 @@ router.post('/login',passport.authenticate('local',{failureFlash:true,failureRed
 
 router.get('/logout',(req,res)=>{
     req.logOut();
-    req.flash('warning','Sayonara!')
-    res.redirect('/campground')
+    res.redirect('/recruiter')
 })
 
 module.exports = router

@@ -4,7 +4,7 @@ const CatchAsync = require('../utils/CatchAsync')
 const listOfData = require('../seeds/seedHelper')
 const Profile = require('../models/profile')
 const {validateProfile,isLoggedIn,createdProfile} = require('../middleware')
-const jobseeker = require('../models/jobseeker')
+const Jobseeker = require('../models/jobseeker')
 
 // router.get('/',CatchAsync(async(req,res)=>{
 //     const profiles = await Profile.find({})
@@ -29,7 +29,7 @@ router.post('/',isLoggedIn,validateProfile, CatchAsync(async (req, res) => {
     await profile.save()
     const user = req.user
     user.profile = profile._id
-    await jobseeker.findOneAndUpdate(user._id,user)
+    await Jobseeker.findOneAndUpdate(user._id,user)
     res.redirect('/dashboard/')
 }))
 

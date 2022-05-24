@@ -19,6 +19,7 @@ const Recruiter = require('./models/recruiter')
 const profileRoutes = require('./routes/profile')
 const recruiterRoutes = require('./routes/recruiter')
 const jobseekerRoutes = require('./routes/jobseeker')
+const jobRoutes = require('./routes/job')
 const {recommendKjobs} = require('./algorithms/algorithm')
 const {validateProfile,isLoggedIn,createdProfile} = require('./middleware')
 
@@ -97,9 +98,9 @@ app.get('/dashboard',isLoggedIn,CatchAsync(async (req,res)=>{
 }))
 
 app.get('/recruiter/dashboard',async(req,res)=>{
-    // const user = await Recruiter.findById(req.user.id).populate('jobs')
-    const user = await Recruiter.findById('628a8c00e0698f83727de698').populate('jobs')
-    res.render('recruiter/dashboard',{user})
+    const user = await Recruiter.findById(req.user._id).populate('jobs')
+    const numberOfJobs = user.jobs.length
+    res.render('recruiter/dashboard',{user,numberOfJobs})
 })
 
 app.get('/analysis',isLoggedIn,createdProfile,CatchAsync(async(req,res)=>{
@@ -113,7 +114,9 @@ app.get('/analysis',isLoggedIn,createdProfile,CatchAsync(async(req,res)=>{
     res.render('jobseeker/analysis',{jobs})
 }))
 
+
 app.use('/profile',profileRoutes)
+app.use('/recruiter/job',jobRoutes)
 
 
 app.get('/',(req,res)=>{

@@ -56,7 +56,7 @@
         <label for="jobExperience">Job Experience (in year(s))</label>
         <input type="number" id="jobExperience" name="profile[jobExperience]" value="<%= profile.jobExperience %>">
     </div>
-    <div>
+    <!-- <div>
         <label for="skills[0]">Skills 1</label>
         <select name="profile[skills][0]" id="skills[0]">
             <% for(let ele of listOfData.skills){ %>
@@ -78,6 +78,15 @@
                     ><%= ele %></option>
             <% } %>
         </select>
+    </div> -->
+    <div>
+        <label for="skills">Skills</label>
+        <div id="skills">
+            <% for(let ele of listOfData.skills){ %>
+                <label><input type="checkbox" name="profile[skills][]" value="<%= ele %>" <% if(ele == profile.skills){%> checked <%}%>
+                    ><%= ele %></label>
+            <%}%>
+        </div>
     </div>
     <div>
         <label for="college">College</label>

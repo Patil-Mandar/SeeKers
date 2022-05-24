@@ -79,7 +79,7 @@ const recommendKusers = async (job, k) => {
     return preferenceList.slice(0, k)
 }
 
-module.exports = { recommendKjobs }
+module.exports = { recommendKjobs,recommendKusers }
 
 // const test = async ()=>{
 //     const profile = await Profile.findById('628a01656df50f8d37eb8143')

@@ -1,0 +1,94 @@
+<% layout('/layouts/recruiterBoilerplate')  %> 
+
+<h2>New Job</h2>
+<form action="/recruiter/job" method="post">
+    <div>
+        <label for="company">Company</label>
+        <select name="job[company]" id="company">
+            <% for(let ele of listOfData.companies){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="jobTitle">Job Title</label>
+        <input type="text" id="jobTitle" name="job[jobTitle]">
+    </div>
+    <div>
+        <label for="category">Category</label>
+        <select name="job[category]" id="category">
+            <% for(let ele of listOfData.categories){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="type">Type</label>
+        <select name="job[type]" id="type">
+            <% for(let ele of listOfData.types){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="mode">Mode</label>
+        <select name="job[mode]" id="mode">
+            <% for(let ele of listOfData.modes){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <div>
+        <label for="salary">Salary</label>
+        <input type="number" id="salary" name="job[salary]">
+    </div>
+    <div>
+        <label for="minAge">Min Age</label>
+        <input type="number" id="minAge" name="job[minAge]">
+    </div>
+    <div>
+        <label for="minExperience">Min Experience</label>
+        <input type="number" id="minExperience" name="job[minExperience]">
+    </div>
+    <div>
+        <label for="reqDegree">Req Degrees</label>
+        <div id="reqDegree">
+            <% for(let ele of listOfData.degrees){ %>
+                <label><input type="checkbox" name="job[reqDegree][]" value="<%= ele %>"><%= ele %></label>
+            <%}%>
+        </div>
+    </div>
+    <div>
+        <div>
+        <label for="reqMajor">req Major</label>
+        <div id="reqMajor">
+            <% for(let ele of listOfData.majors){ %>
+                <label><input type="checkbox" name="job[reqMajor][]" value="<%= ele %>"><%= ele %></label>
+            <%}%>
+        </div>
+    <div>
+        <label for="reqSkills">req Skills</label>
+        <div id="reqSkills">
+            <% for(let ele of listOfData.skills){ %>
+                <label><input type="checkbox" name="job[reqSkills][]" value="<%= ele %>"><%= ele %></label>
+            <%}%>
+        </div>
+    </div>
+    <div>
+        <label for="goodToHaveSkills">Good To Have Skills</label>
+        <div id="goodToHaveSkills">
+            <% for(let ele of listOfData.skills){ %>
+                <label><input type="checkbox" name="job[goodToHaveSkills][]" value="<%= ele %>"><%= ele %></label>
+            <%}%>
+        </div>
+    </div>
+    <div>
+        <label for="location">Location</label>
+        <select name="job[location]" id="location">
+            <% for(let ele of listOfData.locations){ %>
+                <option value="<%= ele %>"><%= ele %></option>
+            <% } %>
+        </select>
+    </div>
+    <button>Create</button>
+</form>
