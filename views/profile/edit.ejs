@@ -83,8 +83,7 @@
         <label for="skills">Skills</label>
         <div id="skills">
             <% for(let ele of listOfData.skills){ %>
-                <label><input type="checkbox" name="profile[skills][]" value="<%= ele %>" <% if(ele == profile.skills){%> checked <%}%>
-                    ><%= ele %></label>
+                <label><input type="checkbox" name="profile[skills][]" value="<%= ele %>"><%= ele %></label>
             <%}%>
         </div>
     </div>
@@ -97,6 +96,51 @@
             <% } %>
         </select>
     </div>
+        <div>
+        <label for="jobHistory">Job History</label>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+        <div id="jobHistory">
+            <% for(let ele of jobs){ %>
+                <label><input type="checkbox" name="profile[jobHistory][]" value="<%= ele._id %>" <% if(ele._id == profile.jobHistory){%> checked <%}%>
+                    ><%= ele.company %>(<%= ele.jobTitle%>)    <%= ele.location %></label>
+            <%}%>
+        </div>
+    </div>
     <button>Edit Profile</button>
 </form>
 <a href="/profile/<%= profile._id%>">Back To Profile</a>    
+
+<script>
+    // let skills = JSON.stringify('<%- profile.skills %>')
+    let skills = JSON.parse('<%- profile.skills %>')
+    // skills = skills.split(",")
+    console.log(skills)
+    const skillDiv = document.getElementById('skills')
+    labels = skillDiv.getElementsByTagName('label')
+    for(let label of labels){
+        txtValue = label.textContent || label.innerText
+        if(txtValue in skills){
+            label.checked = true
+        }
+    }
+
+    function myFunction() {
+        // Declare variables
+        var input, filter, ul, li, input, i, txtValue;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        div = document.getElementById("jobHistory");
+        labels = div.getElementsByTagName('label');
+
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (i = 0; i < labels.length; i++) {
+            txtValue = labels[i].textContent || labels[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            labels[i].style.display = "";
+            } else {
+            labels[i].style.display = "none";
+            }
+        }
+    }
+</script>

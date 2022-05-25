@@ -90,7 +90,7 @@ app.use('/recruiter',recruiterRoutes)
 app.get('/dashboard',isLoggedIn,CatchAsync(async (req,res)=>{
     const user = req.user
     if(user.profile){
-        const profile = await Profile.findById(user.profile)
+        const profile = await Profile.findById(user.profile).populate('jobHistory')
         res.render('jobseeker/dashboard',{user,profile})
     }else{
         res.render('jobseeker/dashboard',{user,profile:null})
@@ -104,8 +104,9 @@ app.get('/recruiter/dashboard',async(req,res)=>{
 })
 
 app.get('/analysis',isLoggedIn,createdProfile,CatchAsync(async(req,res)=>{
-    const profile = await Profile.findById(req.user.profile)
+    const profile = await Profile.findById(req.user.profile).populate('jobHistory')
     const preferenceList = await recommendKjobs(profile,5)
+    console.log(preferenceList)
     const jobs = []
     for(let i of preferenceList){
         let job = await Job.findById(i[0])

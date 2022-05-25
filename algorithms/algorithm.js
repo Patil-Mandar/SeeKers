@@ -43,7 +43,17 @@ const getUsersCandidateSet = (job) => {
 const preference = (user, job) => {
     //returns the calculated preference rating of user and job
 
-    return similarity.userJobSimilarity(user, job)
+    let userJobSimilarity = similarity.userJobSimilarity(user, job)
+
+    let total = 0
+
+    user.jobHistory.forEach(pastJob=>{
+        total += similarity.jobSimilarity(pastJob,job)
+    })
+
+    let previousJobSimilarity = total/user.jobHistory.length
+
+    return (userJobSimilarity+previousJobSimilarity)/2
 }
 
 
