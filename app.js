@@ -20,8 +20,8 @@ const profileRoutes = require('./routes/profile')
 const recruiterRoutes = require('./routes/recruiter')
 const jobseekerRoutes = require('./routes/jobseeker')
 const jobRoutes = require('./routes/job')
-const {recommendKjobs} = require('./algorithms/algorithm')
-const {validateProfile,isLoggedIn,createdProfile} = require('./middleware')
+const { recommendKjobs } = require('./algorithms/algorithm')
+const { validateProfile, isLoggedIn, createdProfile } = require('./middleware')
 
 
 
@@ -29,14 +29,16 @@ const app = express()
 
 
 //connecting with DB
-mongoose.connect('mongodb://localhost:27017/JobRecommendationSystem')
+mongoose.connect('mongodb://localhost:27017/seeKers')
     .then(data => console.log('Database connected'))
     .catch(err => console.log('Database connection failed'))
 
 
-app.engine('ejs',ejsMate)
-app.set('view engine','ejs')
-app.set('views',path.join(__dirname,'views'))
+
+app.engine('ejs', ejsMate)
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
@@ -58,88 +60,93 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new GoogleStrategy({
-    clientID:process.env.GOOGLE_CLIENT_ID,
-    clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL:process.env.GOOGLE_CALLBACK_URL
-  },
-  async function(accessToken, refreshToken, profile, cb) {
-    await Jobseeker.findOrCreate(
-        {googleId: profile.id,name:profile.displayName,photo:profile.photos[0].value,email:profile.emails[0].value},
-        function (err, user) {
-            return cb(err, user);
-        })
-  }
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL
+},
+    async function (accessToken, refreshToken, profile, cb) {
+        await Jobseeker.findOrCreate(
+            {
+                googleId: profile.id,
+                name: profile.displayName,
+                photo: profile.photos[0].value,
+                email: profile.emails[0].value
+            },
+            function (err, user) {
+                return cb(err, user);
+            })
+    }
 ))
 passport.use(new LocalStrategy(Recruiter.authenticate()))
-passport.serializeUser(function(user, done) {done(null, user)})
-passport.deserializeUser(function(user, done) {done(null, user)})
+passport.serializeUser(function (user, done) { done(null, user) })
+passport.deserializeUser(function (user, done) { done(null, user) })
 
 
 //middleware for flashing all msg
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     res.locals.currentUser = req.user
-    res.locals.success = req.flash('success')       
+    res.locals.success = req.flash('success')
     res.locals.warning = req.flash('warning')
     res.locals.error = req.flash('error')
     next()
 })
 
-app.use('/',jobseekerRoutes)
-app.use('/recruiter',recruiterRoutes)
+app.use('/', jobseekerRoutes)
+app.use('/recruiter', recruiterRoutes)
 
-app.get('/dashboard',isLoggedIn,CatchAsync(async (req,res)=>{
+app.get('/dashboard', isLoggedIn, CatchAsync(async (req, res) => {
     const user = req.user
-    if(user.profile){
+    if (user.profile) {
         const profile = await Profile.findById(user.profile).populate('jobHistory')
-        res.render('jobseeker/dashboard',{user,profile})
-    }else{
-        res.render('jobseeker/dashboard',{user,profile:null})
+        res.render('jobseeker/dashboard', { user, profile })
+    } else {
+        res.render('jobseeker/dashboard', { user, profile: null })
     }
 }))
 
-app.get('/recruiter/dashboard',async(req,res)=>{
+app.get('/recruiter/dashboard', async (req, res) => {
     const user = await Recruiter.findById(req.user._id).populate('jobs')
     const numberOfJobs = user.jobs.length
-    res.render('recruiter/dashboard',{user,numberOfJobs})
+    res.render('recruiter/dashboard', { user, numberOfJobs })
 })
 
-app.get('/analysis',isLoggedIn,createdProfile,CatchAsync(async(req,res)=>{
+app.get('/analysis', isLoggedIn, createdProfile, CatchAsync(async (req, res) => {
     const profile = await Profile.findById(req.user.profile).populate('jobHistory')
-    const preferenceList = await recommendKjobs(profile,5)
+    const preferenceList = await recommendKjobs(profile, 5)
     console.log(preferenceList)
     const jobs = []
-    for(let i of preferenceList){
+    for (let i of preferenceList) {
         let job = await Job.findById(i[0])
         jobs.push(job)
     }
-    res.render('jobseeker/analysis',{jobs})
+    res.render('jobseeker/analysis', { jobs })
 }))
 
 
-app.use('/profile',profileRoutes)
-app.use('/recruiter/job',jobRoutes)
+app.use('/profile', profileRoutes)
+app.use('/recruiter/job', jobRoutes)
 
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.render('home')
 })
-app.get('/recruiter',(req,res)=>{
+app.get('/recruiter', (req, res) => {
     res.render('recruiter/home')
 })
 
 
 //to resposne all undefined routes
-app.all('*',(req,res)=>{
-    throw new ExpressError(`Page not found`,404)
+app.all('*', (req, res) => {
+    throw new ExpressError(`Page not found`, 404)
 })
 
 //Basic error handler
-app.use((err,req,res,next)=>{
-    const {statusCode=500} = err
-    if(!err.message) err.message = "Something went wrong"
-    res.status(statusCode).render('error',{err})
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err
+    if (!err.message) err.message = "Something went wrong"
+    res.status(statusCode).render('error', { err })
 })
 
-app.listen(3000,()=>{
+app.listen(3000, () => {
     console.log('Serving on port 3000')
 })

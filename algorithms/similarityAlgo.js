@@ -2,15 +2,14 @@ const cosineSimilarity = require('simple-cosine-similarity') //for string simila
 const similarity = require('cosine-similarity') //for numeric similarity
 
 
-//finds similarity between 2 users
+//finds similarity between 2 users(profiles)
 const userSimilarity = (user1, user2) => {
   let totalSimilarity = 0
 
   //similarity between string type factor
   let stringFactors = ['gender', 'degree', 'major', 'college', 'currentLocation']
   for (let factor of stringFactors) {
-    totalSimilarity += cosineSimilarity(user1[factor], user2[factor])
-    //think about the 3rd arg
+    totalSimilarity += cosineSimilarity(user1[factor], user2[factor]) //TODO:Think about 3rd paramenter
   }
   totalSimilarity += cosineSimilarity(
     user1.skills.join(' '),
@@ -35,8 +34,7 @@ const jobSimilarity = (job1, job2) => {
   //similarity between string type factor
   let stringFactors = ['company', 'category', 'type', 'mode', 'location']
   for (let factor of stringFactors) {
-    totalSimilarity += cosineSimilarity(job1[factor], job2[factor])
-    //here too
+    totalSimilarity += cosineSimilarity(job1[factor], job2[factor])   //TODO:Think about 3rd paramenter
   }
   for (let factor of ['reqDegree', 'reqMajor', 'reqSkills', 'goodToHaveSkills']) {
     totalSimilarity += cosineSimilarity(
@@ -55,7 +53,7 @@ const jobSimilarity = (job1, job2) => {
   return totalSimilarity / 10
 }
 
-//find similarity between user and job
+//find similarity between user(profile) and job
 const userJobSimilarity = (user, job) => {
   let totalSimilarity = 0
   totalSimilarity += cosineSimilarity(

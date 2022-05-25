@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">    <!-- sticky-top -->
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Job Recommendation | Recruiter</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient fixed-top">    <!-- sticky-top -->
+    <div class="container-lg">
+      <a class="navbar-brand fs-5 fw-bold" href="">SeeKers <span class="fs-6 fw-normal">| Recruiter</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -10,10 +10,10 @@
         </div>
         <div class="navbar-nav ms-auto">
           <% if(!currentUser){ %> 
-          <a class="nav-link" href="/recruiter/login">LogIn</a>
-          <a class="nav-link" href="/recruiter/register">Register</a>
+          <a class="btn btn-outline-light mx-2" href="/recruiter/login">LogIn</a>
+          <a class="btn btn-success mx-2" href="/recruiter/register">Register</a>
           <% }else{ %> 
-          <a class="nav-link" href="/recruiter/logout">Log Out</a>
+          <a class="btn btn-outline-light" href="/recruiter/logout">Log Out</a>
           <% } %> 
         </div>
       </div>

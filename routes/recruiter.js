@@ -1,38 +1,20 @@
 const express = require('express')
 const CatchAsync = require('../utils/CatchAsync')
-const Recruiter = require('../models/recruiter')
+const recruiter = require('../controllers/recruiter')
 const passport = require('passport')
 const router = express.Router()
 
-router.get('/register',(req,res)=>{
-    res.render('recruiter/registrationForm')
-})
+router.get('/register', recruiter.renderRegistrationForm)
 
-router.post('/register',async(req,res)=>{
-    try{
-        const {username,emailID,password} = req.body
-        const user = new Recruiter({username,emailID})
-        const registeredUser = await Recruiter.register(user,password)
-        req.login(registeredUser,err =>{
-            if(err) return next(err)
-            res.redirect('/recruiter/dashboard')
-        })
-    }catch(e){
-        res.redirect('/recruiter/register')
-    }
-})
+router.post('/register', CatchAsync(recruiter.createNewRecruiter))
 
-router.get('/login',(req,res)=>{
-    res.render('recruiter/login')
-})
+router.get('/login', recruiter.renderLoginForm)
 
-router.post('/login',passport.authenticate('local',{failureFlash:true,failureRedirect:'/recruiter/login'}),async(req,res)=>{
-    res.redirect('/recruiter/dashboard')
-})
+router.post('/login',
+    passport.authenticate('local', { failureFlash: true, failureRedirect: '/recruiter/login' }),
+    CatchAsync(recruiter.login)
+)
 
-router.get('/logout',(req,res)=>{
-    req.logOut();
-    res.redirect('/recruiter')
-})
+router.get('/logout', recruiter.logout)
 
 module.exports = router
