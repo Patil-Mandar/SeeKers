@@ -1,7 +1,7 @@
 genders = [
-    'male',
-    'female',
-    'other'
+    'Male',
+    'Female',
+    'Other'
 ]
 
 degrees = [
@@ -10,8 +10,7 @@ degrees = [
     'Master of Computer Applications (M.C.A.)',
     'Master of Engineering (M.E)',
     'Master of Science (M.Sc.)',
-    'Master of Technology (M. Tech.)',
-    'Diploma'
+    'Master of Technology (M. Tech.)'
 ]
 
 majors = [
@@ -66,11 +65,10 @@ colleges = [
     'Birla Institute of Technology and Science, Pilani',
     'Indian Institute of Technology, Guwahati',
     'Institute of Technology, Banaras Hindu University, Varanasi',
-    'Veermata Jijabai Technological Institute',
-    'Walchand College of Engineering',
-    'Sardar Patel College of Engineering',
-    'Shri Guru Gobind Singhji Institute of Engineering and Technology',
-    'Vishwakarma Institution of Technology'
+    'Veermata Jijabai Technological Institute, Mumbai',
+    'Walchand College of Engineering, Nagpur',
+    'Sardar Patel College of Engineering, Mumbai',
+    'Vishwakarma Institution of Technology, Pune'
 ]
 
 locations = [    
@@ -101,7 +99,11 @@ companies = [
     'Taiwan Semiconductor Manufacturing Co. Ltd',
     'Microsoft Corp',
     'Apple Inc',
-    'Google'
+    'Google',
+    'Microsoft',
+    'Amazone',
+    'Facebook',
+    'Apple'
 ]
 
 categories = [
@@ -122,14 +124,15 @@ categories = [
 ]
 
 types = [
-    'internship',
-    'partime',
-    'fulltime'
+    'Internship',
+    'Partime',
+    'Fulltime'
 ]
 
 modes = [
-    'offline',
-    'online'
+    'Offline',
+    'Online',
+    'Hybrid'
 ]
 
 module.exports = {genders,degrees,skills,majors,colleges,locations,categories,types,modes,companies}

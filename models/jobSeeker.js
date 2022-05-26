@@ -20,11 +20,5 @@ JobseekerSchema.plugin(findOrCreate)
 
 Jobseeker = mongoose.model('Jobseeker',JobseekerSchema)
 
-// Dropping an Index in MongoDB
-// Jobseeker.collection.dropIndex({name : "username_1"}, function(err, res) {
-//     if (err) {
-//         console.log('Error in dropping index!', err);
-//     }
-// });
 
 module.exports = Jobseeker

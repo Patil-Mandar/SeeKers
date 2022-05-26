@@ -1,17 +1,141 @@
-<% layout('/layouts/boilerplate')  %> 
+<% layout('/layouts/boilerplate') %>
 
-    <% if(profile){ %>
-        <p><%= profile %></p>
-        <form action="/profile/edit" method="get">
-            <button>Edit</button>
-        </form>
-        <form action="/analysis" method="get">
-            <button>Recommend me Jobs</button>
-        </form>
-    <% }else{ %>
-        <h1>Umm... Looks like you havn't created your profile yet!</h1>
-        <h3>Let's quickly make one</h3>
-    <form action="/profile/new" method="get">
-        <button>Create Profile</button>
-    </form>
-    <% } %>
+    <div class="row">
+        <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg">
+            <% if(profile){ %>
+                <div class="card-body">
+                    <h2 class="card-title text-center">
+                        Profile
+                    </h2>
+                    <div class="mt-3">
+                        <h4 class="card-title fw-bold d-inline">
+                            <%= profile.name %>
+                        </h4>
+                        <h6 class="card-title d-inline text-muted">
+                            <%= profile.mailID %>
+                        </h6>
+                        <hr class="m-1">
+                        <div class="row">
+                            <div class="col-xl-4 col-6">
+                                <span class="card-text text-muted ">Age:</span>
+                                <span class="card-text fs-6">
+                                    <%= profile.age %>
+                                </span>
+                            </div>
+                            <div class="col-xl-4 col-6">
+                                <span class="card-text text-muted ">Gender:</span>
+                                <span class="card-text fs-6 ">
+                                    <%= profile.gender %>
+                                </span>
+                            </div>
+                            <div class="col-xl-4 col-12">
+                                <span class="card-text text-muted ">Current Location:</span>
+                                <span class="card-text fs-6 ">
+                                    <%= profile.currentLocation %>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="card-title fw-bold text-muted">Education</h5>
+                        <hr class="m-1">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <span class="card-text text-muted ">Degree:</span>
+                                <span class="card-text fs-6">
+                                    <%= profile.degree %>
+                                </span>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <span class="card-text text-muted ">Major:</span>
+                                <span class="card-text fs-6">
+                                    <%= profile.major %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span class="card-text text-muted ">College:</span>
+                                <span class="card-text fs-6">
+                                    <%= profile.college %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col">
+                                <span class="card-text text-muted">Skills:</span>
+                                <% for(let skill of profile.skills){ %>
+                                    <span class="bg-secondary p-1 mt-1 rounded-1 text-light d-inline-block ">
+                                        <%= skill %>
+                                    </span>
+                                    <%}%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="card-title fw-bold text-muted">Experience</h5>
+                        <hr class="m-1">
+                        <div class="row">
+                            <div class="col">
+                                <span class="card-text text-muted ">Job Experience:</span>
+                                <span class="card-text fs-6">
+                                    <%= profile.jobExperience %> year(s)
+                                </span>
+                            </div>
+                        </div>
+                        <% if(profile.jobHistory.length){ %>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-text text-muted ">Job History:</div>
+                                    <% for(let job of profile.jobHistory){ %>
+                                        <div class="card m-2">
+                                            <div class="card-body">
+                                                <h6 class="card-title d-inline fw-bold">
+                                                    <%=job.jobTitle%>
+                                                </h6>
+                                                <span class="card-text text-muted ms-1">
+                                                    <%=job.company%>
+                                                </span>
+                                                <hr class="m-1">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-sm-6 col-12">
+                                                        <span class="card-text text-muted ">Type:</span>
+                                                        <span class="card-text fs-6">
+                                                            <%= job.type %>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xl-4 col-sm-6 col-12">
+                                                        <span class="card-text text-muted ">Mode:</span>
+                                                        <span class="card-text fs-6">
+                                                            <%= job.mode %>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xl-4 col-sm-6 col-12">
+                                                        <span class="card-text text-muted ">Category:</span>
+                                                        <span class="card-text fs-6">
+                                                            <%= job.category %>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <%}%>
+                                </div>
+                            </div>
+                        <%}%>
+                    </div>
+                    <div class="text-center my-3">
+                        <a class="btn btn-success" href="/profile/analysis">Recommend Me Jobs</a>
+                    </div>
+                </div>
+                <% }else{ %>
+                    <div class="card-body text-center">
+                        <h1 class="card-title">Umm... </h1>
+                        <h4 class="card-title">Looks like you havn't created your profile yet</h4>
+                        <p class="card-text">No Worries! Let's creat one quickly</p>
+                        <a class="btn btn-primary text-light" href="/profile/new">Create Profile</a>
+                    </div>
+                    <% } %>
+        </div>
+
+    </div>

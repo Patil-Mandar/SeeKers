@@ -7,6 +7,10 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/jobs">Explore Jobs</a>
+          <% if(currentUser){ %> 
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+          <% } %> 
         </div>
         <div class="navbar-nav ms-auto">
           <% if(!currentUser){ %> 
@@ -18,6 +22,9 @@
                 <img src="<%= currentUser.photo %>" width="30" height="30" class="border border-2 border-light rounded-circle ms-2" alt="">
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <% if(currentUser.profile){ %>
+                  <li><a class="dropdown-item" href="/profile/edit">Edit Profile</a></li>
+                <%}%>
                 <li><a class="dropdown-item text-danger" href="/logout">Log Out</a></li>
               </ul>
             </li>

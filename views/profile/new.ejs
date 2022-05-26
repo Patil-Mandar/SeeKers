@@ -4,11 +4,11 @@
 <form action="/profile" method="POST">
     <div>
         <label for="name">Name</label>
-        <input type="text" id="name" name="profile[name]">
+        <input type="text" id="name" name="profile[name]" value="<%= currentUser.name %>">
     </div>
     <div>
         <label for="mailID">MailID</label>
-        <input type="text" id="mailID" name="profile[mailID]">
+        <input type="text" id="mailID" name="profile[mailID]" value="<%= currentUser.email %>">
     </div>
     <div>
         <label for="age">Age</label>

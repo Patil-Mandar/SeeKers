@@ -111,18 +111,18 @@
 <a href="/profile/<%= profile._id%>">Back To Profile</a>    
 
 <script>
-    // let skills = JSON.stringify('<%- profile.skills %>')
-    let skills = JSON.parse('<%- profile.skills %>')
-    // skills = skills.split(",")
-    console.log(skills)
-    const skillDiv = document.getElementById('skills')
-    labels = skillDiv.getElementsByTagName('label')
-    for(let label of labels){
-        txtValue = label.textContent || label.innerText
-        if(txtValue in skills){
-            label.checked = true
-        }
-    }
+    // // let skills = JSON.stringify('<%- profile.skills %>')
+    // let skills = JSON.parse('<%- profile.skills %>')
+    // // skills = skills.split(",")
+    // console.log(skills)
+    // const skillDiv = document.getElementById('skills')
+    // labels = skillDiv.getElementsByTagName('label')
+    // for(let label of labels){
+    //     txtValue = label.textContent || label.innerText
+    //     if(txtValue in skills){
+    //         label.checked = true
+    //     }
+    // }
 
     function myFunction() {
         // Declare variables

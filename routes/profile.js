@@ -5,37 +5,21 @@ const listOfData = require('../seeds/seedHelper')
 const Profile = require('../models/profile')
 const Job = require('../models/job')
 const {validateProfile,isLoggedIn,createdProfile} = require('../middleware')
+const { recommendKjobs } = require('../algorithms/algorithm')
 const Jobseeker = require('../models/jobseeker')
 
-// router.get('/',CatchAsync(async(req,res)=>{
-//     const profiles = await Profile.find({})
-//     res.render('profile/index',{profiles})
-// }))
 
-// router.get('/new',isLoggedIn,CatchAsync(async (req,res)=>{
-router.get('/new',CatchAsync(async (req,res)=>{
+router.get('/new',isLoggedIn,CatchAsync(async (req,res)=>{
     const jobs = await Job.find({})
     res.render('profile/new',{listOfData,jobs})
 }))
 
-// router.get('/:id',CatchAsync(async(req,res)=>{
-//     const {id} = req.params
-//     const profile = await Profile.findById(id)
-//     if(!profile){
-//         return res.redirect('/profile')
-//     }
-//     res.render('profile/show',{profile})
-// }))
-
-// router.post('/',isLoggedIn,validateProfile, CatchAsync(async (req, res) => {
-router.post('/',CatchAsync(async (req, res) => {
-    console.log(req.body.profile)
-    res.redirect('/profile/new')
+router.post('/',isLoggedIn, CatchAsync(async (req, res) => {
     const profile = new Profile(req.body.profile)
     await profile.save()
     const user = req.user
     user.profile = profile._id
-    await Jobseeker.findOneAndUpdate(user._id,user)
+    await Jobseeker.findByIdAndUpdate(user._id,user)
     res.redirect('/dashboard/')
 }))
 
@@ -47,6 +31,8 @@ router.get('/edit',isLoggedIn,createdProfile,CatchAsync( async (req, res) => {
 
 router.put('/edit',isLoggedIn,createdProfile,validateProfile,CatchAsync(async (req, res) => {0
     const id = req.user.profile;
+    const newProfile = req.body.profile
+    if(!newProfile.jobHistory) newProfile.jobHistory = []
     const profile = await Profile.findByIdAndUpdate(id, {...req.body.profile})
     res.redirect(`/dashboard/`)
 }))
@@ -56,5 +42,16 @@ router.put('/edit',isLoggedIn,createdProfile,validateProfile,CatchAsync(async (r
 //     await Profile.findByIdAndDelete(id);
 //     res.redirect('/profile');
 // }))
+
+router.get('/analysis', isLoggedIn, createdProfile, CatchAsync(async (req, res) => {
+    const profile = await Profile.findById(req.user.profile).populate('jobHistory')
+    const preferenceList = await recommendKjobs(profile, 5)
+    const jobs = []
+    for (let i of preferenceList) {
+        let job = await Job.findById(i[0])
+        jobs.push(job)
+    }
+    res.render('jobseeker/analysis', { jobs })
+}))
 
 module.exports = router

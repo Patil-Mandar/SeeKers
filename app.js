@@ -20,7 +20,6 @@ const profileRoutes = require('./routes/profile')
 const recruiterRoutes = require('./routes/recruiter')
 const jobseekerRoutes = require('./routes/jobseeker')
 const jobRoutes = require('./routes/job')
-const { recommendKjobs } = require('./algorithms/algorithm')
 const { validateProfile, isLoggedIn, createdProfile } = require('./middleware')
 
 
@@ -93,39 +92,8 @@ app.use((req, res, next) => {
 
 app.use('/', jobseekerRoutes)
 app.use('/recruiter', recruiterRoutes)
-
-app.get('/dashboard', isLoggedIn, CatchAsync(async (req, res) => {
-    const user = req.user
-    if (user.profile) {
-        const profile = await Profile.findById(user.profile).populate('jobHistory')
-        res.render('jobseeker/dashboard', { user, profile })
-    } else {
-        res.render('jobseeker/dashboard', { user, profile: null })
-    }
-}))
-
-app.get('/recruiter/dashboard', async (req, res) => {
-    const user = await Recruiter.findById(req.user._id).populate('jobs')
-    const numberOfJobs = user.jobs.length
-    res.render('recruiter/dashboard', { user, numberOfJobs })
-})
-
-app.get('/analysis', isLoggedIn, createdProfile, CatchAsync(async (req, res) => {
-    const profile = await Profile.findById(req.user.profile).populate('jobHistory')
-    const preferenceList = await recommendKjobs(profile, 5)
-    console.log(preferenceList)
-    const jobs = []
-    for (let i of preferenceList) {
-        let job = await Job.findById(i[0])
-        jobs.push(job)
-    }
-    res.render('jobseeker/analysis', { jobs })
-}))
-
-
 app.use('/profile', profileRoutes)
 app.use('/recruiter/job', jobRoutes)
-
 
 app.get('/', (req, res) => {
     res.render('home')

@@ -44,6 +44,8 @@ const preference = (user, job) => {
     //finding similarity between user(profile) and job
     let userJobSimilarity = similarity.userJobSimilarity(user, job) 
     
+    if(user.jobHistory.length == 0) return userJobSimilarity
+
     //finding avg similarity between user's past job and current job
     let total = 0
     user.jobHistory.forEach(pastJob=>{
