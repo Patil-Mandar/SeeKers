@@ -29,7 +29,7 @@ router.get('/edit',isLoggedIn,createdProfile,CatchAsync( async (req, res) => {
     res.render('profile/edit', {listOfData,profile,jobs})
 }))
 
-router.put('/edit',isLoggedIn,createdProfile,validateProfile,CatchAsync(async (req, res) => {0
+router.put('/edit',isLoggedIn,createdProfile,validateProfile,CatchAsync(async (req, res) => {
     const id = req.user.profile;
     const newProfile = req.body.profile
     if(!newProfile.jobHistory) newProfile.jobHistory = []
@@ -37,11 +37,7 @@ router.put('/edit',isLoggedIn,createdProfile,validateProfile,CatchAsync(async (r
     res.redirect(`/dashboard/`)
 }))
 
-// router.delete('/:id', CatchAsync(async (req, res) => {
-//     const { id } = req.params;
-//     await Profile.findByIdAndDelete(id);
-//     res.redirect('/profile');
-// }))
+
 
 router.get('/analysis', isLoggedIn, createdProfile, CatchAsync(async (req, res) => {
     const profile = await Profile.findById(req.user.profile).populate('jobHistory')
