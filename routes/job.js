@@ -26,7 +26,7 @@ router.post('/', CatchAsync(async (req, res) => {
 
 router.get('/:id',CatchAsync(async(req,res)=>{
     const {id} = req.params
-    const job = await Job.findById(id)
+    const job = await Job.findById(id).populate('author')
     res.render('job/show',{job})
 }))
 

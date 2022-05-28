@@ -1,6 +1,112 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
-
-
-    <h2><%= job %></h2><br>
-    <a href="/recruiter/job/<%= job._id %>/analysis">Recommend top profiles</a>
+<div class="row">
+    <div class="card col-md-8 offset-md-2 col-10 offset-1 my-4 shadow-lg">
+        <div class="card-body">
+            <h2 class="card-title text-center">
+                <%= job.company %>
+            </h2>
+            <div class="mt-3">
+                <h4 class="card-title fw-bold d-inline">
+                    <%= job.jobTitle %>
+                </h4>
+                <hr class="m-1">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <span class="card-text text-muted ">Category:</span>
+                        <span class="card-text fs-6">
+                            <%= job.category %>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <span class="card-text text-muted ">Location:</span>
+                        <span class="card-text fs-6 ">
+                            <%= job.location %>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-12">
+                        <span class="card-text text-muted ">Type:</span>
+                        <span class="card-text fs-6 ">
+                            <%= job.type %>
+                        </span>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <span class="card-text text-muted ">Mode:</span>
+                        <span class="card-text fs-6 ">
+                            <%= job.mode %>
+                        </span>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <span class="card-text text-muted ">Salary:</span>
+                        <span class="card-text fs-6 ">
+                            <%= job.salary %> Rupees / month
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h5 class="card-title fw-bold text-muted">Requirements</h5>
+                <hr class="m-1">
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm col-12">
+                    <span class="card-text  ">Min. Age:</span>
+                    <span class="card-text fs-6 ">
+                        <%= job.minAge %> years
+                    </span>
+                </div>
+                <div class="col-sm col-12">
+                    <span class="card-text  ">Min. Job Experience:</span>
+                    <span class="card-text fs-6 ">
+                        <%= job.minExperience %> year(s)
+                    </span>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span class="card-text  ">Required Degree:</span>
+                    <% for(let degree of job.reqDegree){ %>
+                        <span class="bg-secondary p-1 mt-1 rounded-1 text-light d-inline-block card-text">
+                            <%= degree %>
+                        </span>
+                    <%}%>
+                <br>
+                <span class="card-text text-muted fs-6">(Must be enrolled to atleast one of this degrees)</span>
+            </div>
+            <div class="mt-3">
+                <span class="card-text ">Required Major:</span>
+                    <% for(let major of job.reqMajor){ %>
+                        <span class="bg-secondary p-1 mt-1 rounded-1 text-light d-inline-block card-text">
+                            <%= major %>
+                        </span>
+                    <%}%>
+                <br>
+                <span class="card-text text-muted fs-6">(Must be enrolled with one of this majors)</span>
+            </div>
+            <div class="mt-3">
+                <span class="card-text ">Required Skills:</span>
+                    <% for(let skill of job.reqSkills){ %>
+                        <span class="bg-secondary p-1 mt-1 rounded-1 text-light d-inline-block card-text">
+                            <%= skill %>
+                        </span>
+                    <%}%>
+                <br>
+                <span class="card-text text-muted fs-6">(Must have the following skills)</span>
+            </div>
+            <div class="mt-3">
+                <span class="card-text ">Good to have Skills:</span>
+                    <% for(let skill of job.goodToHaveSkills){ %>
+                        <span class="bg-secondary p-1 mt-1 rounded-1 text-light d-inline-block card-text">
+                            <%= skill %>
+                        </span>
+                    <%}%>
+                <br>
+            </div>
+            <div class="text-end mt-4">
+                <a href="/recruiter/job/<%= job._id %>/edit" class="btn btn-outline-secondary mb-2">Edit</a>
+                <a href="/recruiter/job/<%= job._id %>/delete" class="btn btn-outline-danger mb-2">Delete</a>
+                <a href="/recruiter/job/<%= job._id %>/analysis" class="btn btn-success mb-2">Recommend Profiles</a>
+            </div>
+    </div>
+</div>
   
