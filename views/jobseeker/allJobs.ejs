@@ -1,5 +1,134 @@
 <% layout('/layouts/boilerplate')  %> 
 
-<% for(let job of jobs){ %>
-    <h5><%=job%></h5>
-<%}%>
+<div class="text-center row">
+    <div class="col-2 offset-1 col-md-6 offset-md-2">
+        <input id="myInput" type="text" class="form-control rounded-50" placeholder="Search" onkeyup="myFunction()">
+    </div>
+    <button class="btn btn-primary col-2 col-md-2" onclick="sortListDir()">Sort by Salary</button>
+</div>
+
+<div class="row my-3" id="jobList">
+    <% for(let job of jobs){ %>
+        <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg">
+            <div class="card-body">
+                <div class="mt-3">
+                    <h4 class="card-title fw-bold d-inline">
+                        <%= job.jobTitle %> <span class="card-title fs-5 text-muted fw-bold">(<%= job.company %>)</span>
+                    </h4>
+                    <hr class="m-1">
+                    <div class="row">
+                        <div class="col-md-6 col-12 mt-1">
+                            <span class="card-text text-muted ">Category:</span>
+                            <span class="card-text fs-6">
+                                <%= job.category %>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-12 mt-1">
+                            <span class="card-text text-muted ">Location:</span>
+                            <span class="card-text fs-6 ">
+                                <%= job.location %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-12 mt-1">
+                            <span class="card-text text-muted ">Type:</span>
+                            <span class="card-text fs-6 ">
+                                <%= job.type %>
+                            </span>
+                        </div>
+                        <div class="col-md-3 col-12 mt-1">
+                            <span class="card-text text-muted ">Mode:</span>
+                            <span class="card-text fs-6 ">
+                                <%= job.mode %>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-12 mt-1">
+                            <span class="card-text text-muted">Salary:</span>
+                            <span class="card-text fs-6 salary">
+                                <%= job.salary %> Rupees / month
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <a href='/job/<%= job._id %>' class="btn btn-outline-primary btn-sm mt-3">View</a>
+                </div>
+            </div>
+        </div>
+    <%}%>
+</div>
+
+<script>
+    function myFunction() {
+    // Declare variables
+    var input, filter, ul, li, input, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    jobs = document.getElementById("jobList").children;
+    
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < jobs.length; i++) {
+        txtValue = jobs[i].textContent || jobs[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        jobs[i].style.display = "";
+        } else {
+        jobs[i].style.display = "none";
+        }
+    }
+}
+
+  function sortListDir() {
+  var jobs, i, switching, jobs, shouldSwitch, dir, switchcount = 0;
+  jobs = document.getElementById("jobList").children;
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  // Make a loop that will continue until no switching has been done:
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    // Loop through all list-items:
+    for (i = 0; i < (jobs.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Check if the next item should switch place with the current item,
+      based on the sorting direction (asc or desc): */
+      if (dir == "asc") {
+        if (Number(jobs[i].getElementsByClassName("salary").innerHTML) > Number(jobs[i + 1].getElementsByClassName("salary").innerHTML)) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (Number(jobs[i].getElementsByClassName("salary").innerHTML) < Number(jobs[i + 1].getElementsByClassName("salary").innerHTML)) {
+          /* If next item is alphabetically higher than current item,
+          mark as a switch and break the loop: */
+          shouldSwitch= true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      jobs[i].parentNode.insertBefore(jobs[i + 1], jobs[i]);
+      console.log('test1')
+      switching = true;
+      // Each time a switch is done, increase switchcount by 1:
+      switchcount ++;
+    } else {
+      console.log('test2')
+
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>

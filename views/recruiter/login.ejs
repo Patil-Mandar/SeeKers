@@ -1,14 +1,23 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
 
-    <h4 class="card-title">Login</h4>
-    <form class="needs-validation form" action="/recruiter/login" method="post">
-        <div class="mb-3">
-            <label class="form-label" for="username">Username</label>
-            <input class="form-control" type="text" id="username" name="username" required autofocus>
+<div class="row">
+    <div class="col-md-6 offset-md-3  col-xl-4 offset-xl-4">
+        <div class="card shadow-lg mt-4">
+            <div class="card-body">
+                <h4 class="card-title text-center">Login</h4>
+                <form class="form" action="/recruiter/login" method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" type="text" id="username" name="username" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" required>
+                    </div>
+                    <button class="btn btn-success w-100">Login</button>
+                </form>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label" for="password">Password</label>
-            <input class="form-control" type="password" id="password" name="password" required>
-        </div>
-        <button class="btn btn-success w-100">Login</button>
-    </form>
+    </div>
+</div>
+

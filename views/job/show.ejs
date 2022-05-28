@@ -1,4 +1,9 @@
-<% layout('/layouts/recruiterBoilerplate')  %> 
+<% if(currentUser.photo){ %> 
+    <% layout('/layouts/boilerplate')  %> 
+<% }else{ %> 
+        <% layout('/layouts/recruiterBoilerplate')  %> 
+<% } %> 
+
 <div class="row">
     <div class="card col-md-8 offset-md-2 col-10 offset-1 my-4 shadow-lg">
         <div class="card-body">
@@ -103,9 +108,11 @@
                 <br>
             </div>
             <div class="text-end mt-4">
-                <a href="/recruiter/job/<%= job._id %>/edit" class="btn btn-outline-secondary mb-2">Edit</a>
-                <a href="/recruiter/job/<%= job._id %>/delete" class="btn btn-outline-danger mb-2">Delete</a>
-                <a href="/recruiter/job/<%= job._id %>/analysis" class="btn btn-success mb-2">Recommend Profiles</a>
+                <% if(job.author && job.author._id == currentUser._id){ %> 
+                    <a href="/recruiter/job/<%= job._id %>/edit" class="btn btn-outline-secondary mb-2">Edit</a>
+                    <a href="/recruiter/job/<%= job._id %>/delete" class="btn btn-outline-danger mb-2">Delete</a>
+                    <a href="/recruiter/job/<%= job._id %>/analysis" class="btn btn-success mb-2">Recommend Profiles</a>
+                <% } %> 
             </div>
     </div>
 </div>

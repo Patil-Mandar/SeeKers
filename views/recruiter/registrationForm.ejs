@@ -1,18 +1,26 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
 
-    <h4 >Register</h4>
-    <form action="/recruiter/register" method="post" novalidate>
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required autofocus>
+<div class="row">
+    <div class="col-md-6 offset-md-3  col-xl-4 offset-xl-4">
+        <div class="card shadow-lg mt-4">
+            <div class="card-body">
+                <h4 class="card-title text-center">Register</h4>
+                <form class="form" action="/recruiter/register" method="post" >
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" type="text" id="username" name="username" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="emailID">Email</label>
+                        <input class="form-control" type="email" id="emailID" name="emailID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" required>
+                    </div>
+                    <button class="btn btn-success w-100">Register</button>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="emailID" required>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button>Register</button>
-    </form>
+    </div>
+</div>

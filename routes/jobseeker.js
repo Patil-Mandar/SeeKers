@@ -33,4 +33,11 @@ router.get('/jobs',CatchAsync(async(req,res)=>{
   res.render('jobseeker/allJobs',{jobs})
 }))
 
+router.get('/job/:id',CatchAsync(async(req,res)=>{
+  const {id} = req.params
+  const job = await Job.findById(id).populate('author')
+  res.render('job/show',{job})
+}))
+
+
 module.exports = router

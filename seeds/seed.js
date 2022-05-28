@@ -25,7 +25,7 @@ const seedDB = async () => {
     for(let i=0;i<1000;i++){
         let prof = new Profile({
             name:'Test User',
-            mailID:'testing@user.com',
+            mailID:'mvp23402@gmail.com',
             gender: getRandomSubarray(listOfData.genders,1)[0],
             age:18 + Math.floor(Math.random() *20),
             degree: getRandomSubarray(listOfData.degrees,1)[0],
@@ -39,6 +39,7 @@ const seedDB = async () => {
         await prof.save()
         let job = new Job({
             id:i,
+            mailID:'mandar.patil20@vit.edu',
             company:getRandomSubarray(listOfData.companies,1)[0],
             jobTitle:'Test Job',
             category:getRandomSubarray(listOfData.categories,1)[0],

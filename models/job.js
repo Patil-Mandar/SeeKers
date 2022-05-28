@@ -7,6 +7,7 @@ const JobSchema = mongoose.Schema({
         type: mongoose.Schema.Types.String,
         enum: listOfData.companies
     },
+    mailID: String,
     jobTitle: String,
     category: {
         type: mongoose.Schema.Types.String,
