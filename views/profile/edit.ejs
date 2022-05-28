@@ -73,7 +73,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="skills" class="form-label">Skills</label>
-                        <input class="form-control" type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Search the skills...">
+                        <input class="form-control" type="text" id="skillInput" onkeyup="serachFilter('skillInput','skills')" placeholder="Search the skills...">
                         <select class="form-select" name="profile[skills][]" id="skills" multiple="multiple">
                             <% for(let ele of listOfData.skills){ %>
                                 <option class="form-option" value="<%= ele %>" ><%= ele %></option>
@@ -101,7 +101,7 @@
                     </div>
                     <div>
                         <label for="jobHistory" class="form-label">Job History</label>
-                        <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for jobs..">
+                        <input class="form-control" type="text" id="jobHistoryInput" onkeyup="serachFilter('jobHistoryInput','jobHistory')" placeholder="Search for jobs..">
                         <select class="form-select" name="profile[jobHistory][]" id="jobHistory" multiple="multiple">
                             <% for(let ele of jobs){ %>
                                 <option  value="<%= ele._id %>" ><%= ele.jobTitle %> in <%= ele.company %>, <%= ele.location %> as a <%= ele.category %></option>
@@ -184,31 +184,12 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-function myFunction1() {
+function serachFilter(inputTag,ListTagParent) {
     // Declare variables
     var input, filter, ul, li, input, i, txtValue;
-    input = document.getElementById('myInput1');
+    input = document.getElementById(inputTag);
     filter = input.value.toUpperCase();
-    select = document.getElementById("skills");
-    options = select.getElementsByTagName('option');
-
-
-    // Loop through all list items, and hide those who don't match the search query
-    for (i = 0; i < options.length; i++) {
-        txtValue = options[i].textContent || options[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        options[i].style.display = "";
-        } else {
-        options[i].style.display = "none";
-        }
-    }
-}
-function myFunction() {
-    // Declare variables
-    var input, filter, ul, li, input, i, txtValue;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    select = document.getElementById("jobHistory");
+    select = document.getElementById(ListTagParent);
     options = select.getElementsByTagName('option');
 
 

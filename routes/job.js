@@ -42,4 +42,11 @@ router.get('/:id/analysis',CatchAsync(async(req,res)=>{
     res.render('job/analysis',{profiles})
 }))
 
+router.delete('/:id',CatchAsync(async(req,res)=>{
+    const {id} = req.params
+    await Recruiter.findByIdAndUpdate(req.user._id, {$pull:{jobs:id}}) //pull(remove element from array) will remove the review with id reviewid
+    await Job.findByIdAndDelete(id)
+    res.redirect('/recruiter/dashboard')
+}))
+
 module.exports = router

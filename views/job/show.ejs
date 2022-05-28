@@ -110,7 +110,9 @@
             <div class="text-end mt-4">
                 <% if(job.author && job.author._id == currentUser._id){ %> 
                     <a href="/recruiter/job/<%= job._id %>/edit" class="btn btn-outline-secondary mb-2">Edit</a>
-                    <a href="/recruiter/job/<%= job._id %>/delete" class="btn btn-outline-danger mb-2">Delete</a>
+                    <form action='/recruiter/job/<%= job._id %>?_method=DELETE' method="post" class="d-inline">
+                        <button class="btn btn-outline-danger mb-2">Delete</button>
+                    </form>
                     <a href="/recruiter/job/<%= job._id %>/analysis" class="btn btn-success mb-2">Recommend Profiles</a>
                 <% } %> 
             </div>

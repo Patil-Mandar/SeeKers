@@ -1,94 +1,226 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
 
-<h2>New Job</h2>
-<form action="/recruiter/job" method="post">
-    <div>
-        <label for="company">Company</label>
-        <select name="job[company]" id="company">
-            <% for(let ele of listOfData.companies){ %>
-                <option value="<%= ele %>"><%= ele %></option>
-            <% } %>
-        </select>
-    </div>
-    <div>
-        <label for="jobTitle">Job Title</label>
-        <input type="text" id="jobTitle" name="job[jobTitle]">
-    </div>
-    <div>
-        <label for="category">Category</label>
-        <select name="job[category]" id="category">
-            <% for(let ele of listOfData.categories){ %>
-                <option value="<%= ele %>"><%= ele %></option>
-            <% } %>
-        </select>
-    </div>
-    <div>
-        <label for="type">Type</label>
-        <select name="job[type]" id="type">
-            <% for(let ele of listOfData.types){ %>
-                <option value="<%= ele %>"><%= ele %></option>
-            <% } %>
-        </select>
-    </div>
-    <div>
-        <label for="mode">Mode</label>
-        <select name="job[mode]" id="mode">
-            <% for(let ele of listOfData.modes){ %>
-                <option value="<%= ele %>"><%= ele %></option>
-            <% } %>
-        </select>
-    </div>
-    <div>
-        <label for="salary">Salary</label>
-        <input type="number" id="salary" name="job[salary]">
-    </div>
-    <div>
-        <label for="minAge">Min Age</label>
-        <input type="number" id="minAge" name="job[minAge]">
-    </div>
-    <div>
-        <label for="minExperience">Min Experience</label>
-        <input type="number" id="minExperience" name="job[minExperience]">
-    </div>
-    <div>
-        <label for="reqDegree">Req Degrees</label>
-        <div id="reqDegree">
-            <% for(let ele of listOfData.degrees){ %>
-                <label><input type="checkbox" name="job[reqDegree][]" value="<%= ele %>"><%= ele %></label>
-            <%}%>
+
+<div class="text-center">
+    <h2>Create Job</h2>
+</div>
+<div class="row">
+    <div class="card shadow-lg my-3 col-lg-8 col-10 offset-1 offset-lg-2">
+        <div class="card-body">
+            <form id="regForm" action="/recruiter/job" method="POST">
+    
+                <!-- One "tab" for each step in the form: -->
+                <div class="tab" style="display: none;">
+                    <h3 class="card-title text-muted">Job Information</h3>
+                    <div class="row">
+                        <div class="mb-3 col-sm col-12">
+                            <label for="company" class="form-label">Company Name</label>
+                            <select class="form-select" name="job[company]" id="company" >
+                                <% for(let ele of listOfData.companies){ %>
+                                    <option value="<%= ele %>"><%= ele %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm col-12">
+                            <label for="jobTitle" class="form-label">Job Title</label>
+                            <input class="form-control" type="text" id="jobTitle" name="job[jobTitle]" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md col-sm-6 col-12">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" name="job[category]" id="category" >
+                                <% for(let ele of listOfData.categories){ %>
+                                    <option value="<%= ele %>"><%= ele %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md col-sm-6 col-12">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-select" name="job[type]" id="type" >
+                                <% for(let ele of listOfData.types){ %>
+                                    <option value="<%= ele %>"><%= ele %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md col-sm-12 col-12">
+                            <label class="form-label" for="location">Location</label>
+                            <select class="form-select" name="job[location]" id="location" >
+                                <% for(let ele of listOfData.locations){ %>
+                                    <option value="<%= ele %>"><%= ele %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6 col-12">
+                            <label for="mailID" class="form-label">Mail ID</label>
+                            <input class="form-control" type="text" id="mailID" name="job[mailID]" value="<%= currentUser.emailID %>">
+                        </div>
+                        <div class="mb-3 col-sm-3 col-12">
+                            <label for="salary" class="form-label">Salary</label>
+                            <input class="form-control" type="number" id="salary" name="job[salary]" placeholder="in rupees per month">
+                        </div>
+                        <div class="mb-3 col-sm-3 col-12">
+                            <label for="mode" class="form-label">Mode</label>
+                            <select class="form-select" name="job[mode]" id="mode" >
+                                <% for(let ele of listOfData.modes){ %>
+                                    <option value="<%= ele %>"><%= ele %></option>
+                                <% } %>
+                            </select>
+                        </div>   
+                    </div>
+                </div>
+                
+                
+                <div class="tab" style="display: none;">
+                    <h3 class="card-title text-muted">Requirements</h3>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6 col-12">
+                            <label for="minAge" class="form-label">Min Age</label>
+                            <input class="form-control" type="number" id="minAge" name="job[minAge]"%>">
+                        </div>
+                        <div class="mb-3 col-sm-6 col-12">
+                            <label for="minExperience" class="form-label">Min Experience</label>
+                            <input class="form-control" type="number" id="minExperience" name="job[minExperience]"%>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6 col-12">
+                            <label for="degree" class="form-label">Required Degrees</label>
+                            <input class="form-control" type="text" id="degreeInput" onkeyup="serachFilter('degreeInput','degree')" placeholder="Search the degree...">
+                                <select class="form-select" name="job[reqDegree][]" id="degree" multiple="multiple">
+                                    <% for(let ele of listOfData.degrees){ %>
+                                        <option class="form-option" value="<%= ele %>" ><%= ele %></option>
+                                    <%}%>
+                                </select>
+                        </div>
+                        <div class="mb-3 col-md-6 col-12">
+                            <label for="major" class="form-label">Required Majors</label>
+                            <input class="form-control" type="text" id="majorInput" onkeyup="serachFilter('majorInput','major')" placeholder="Search the major...">
+                                <select class="form-select" name="job[reqMajor][]" id="major" multiple="multiple">
+                                    <% for(let ele of listOfData.majors){ %>
+                                        <option class="form-option" value="<%= ele %>" ><%= ele %></option>
+                                    <%}%>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-6 col-12">
+                            <label for="skill" class="form-label">Required Skills</label>
+                            <input class="form-control" type="text" id="skillInput" onkeyup="serachFilter('skillInput','skill')" placeholder="Search the skill...">
+                                <select class="form-select" name="job[reqSkills][]" id="skill" multiple="multiple">
+                                    <% for(let ele of listOfData.skills){ %>
+                                        <option class="form-option" value="<%= ele %>" ><%= ele %></option>
+                                    <%}%>
+                                </select>
+                        </div>
+                        <div class="mb-3 col-md-6 col-12">
+                            <label for="goodToHaveSkills" class="form-label">Good to have Skills</label>
+                            <input class="form-control" type="text" id="goodToHaveSkillsInput" onkeyup="serachFilter('goodToHaveSkillsInput','goodToHaveSkills')" placeholder="Search the skill...">
+                                <select class="form-select" name="job[goodToHaveSkills][]" id="goodToHaveSkills" multiple="multiple">
+                                    <% for(let ele of listOfData.skills){ %>
+                                        <option class="form-option" value="<%= ele %>" ><%= ele %></option>
+                                    <%}%>
+                                </select>
+                        </div>
+                        
+                    </div>
+                    <div class="card-title text-muted">*Use Ctrl for selecting multiple option</div>
+                    
+                </div>
+
+            
+                
+                <div style="overflow:auto;">
+                  <div style="float:right;">
+                    <button class="btn btn-primary mx-1" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button class="btn btn-primary mx-1" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                  </div>
+                </div>
+                
+                
+            </form>
         </div>
     </div>
-    <div>
-        <div>
-        <label for="reqMajor">req Major</label>
-        <div id="reqMajor">
-            <% for(let ele of listOfData.majors){ %>
-                <label><input type="checkbox" name="job[reqMajor][]" value="<%= ele %>"><%= ele %></label>
-            <%}%>
-        </div>
-    <div>
-        <label for="reqSkills">req Skills</label>
-        <div id="reqSkills">
-            <% for(let ele of listOfData.skills){ %>
-                <label><input type="checkbox" name="job[reqSkills][]" value="<%= ele %>"><%= ele %></label>
-            <%}%>
-        </div>
-    </div>
-    <div>
-        <label for="goodToHaveSkills">Good To Have Skills</label>
-        <div id="goodToHaveSkills">
-            <% for(let ele of listOfData.skills){ %>
-                <label><input type="checkbox" name="job[goodToHaveSkills][]" value="<%= ele %>"><%= ele %></label>
-            <%}%>
-        </div>
-    </div>
-    <div>
-        <label for="location">Location</label>
-        <select name="job[location]" id="location">
-            <% for(let ele of listOfData.locations){ %>
-                <option value="<%= ele %>"><%= ele %></option>
-            <% } %>
-        </select>
-    </div>
-    <button>Create</button>
-</form>
+</div>
+<!-- Circles which indicates the steps of the form: -->
+<div class="text-center my-3">
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+</div>
+
+
+
+<script>
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+function showTab(n) {
+  // This function will display the specified tab of the form ...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  // ... and fix the Previous/Next buttons:
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
+  } else {
+    document.getElementById("prevBtn").style.display = "inline";
+  }
+  if (n == (x.length - 1)) {
+    document.getElementById("nextBtn").innerHTML = "Create";
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Next";
+  }
+  // ... and run a function that displays the correct step indicator:
+  fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+  // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab")
+  // Hide the current tab:
+  x[currentTab].style.display = "none";
+  // Increase or decrease the current tab by 1:
+  currentTab = currentTab + n;
+  // if you have reached the end of the form... :
+  if (currentTab >= x.length) {
+    //...the form gets submitted:
+    document.getElementById("regForm").submit();
+    return false;
+  }
+  // Otherwise, display the correct tab:
+  showTab(currentTab);
+}
+
+
+function fixStepIndicator(n) {
+  // This function removes the "active" class of all steps...
+  var i, x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace("active", "");
+  }
+  //... and adds the "active" class to the current step:
+  x[n].className += " active";
+}
+
+function serachFilter(inputTag,ListTagParent) {
+    // Declare variables
+    var input, filter, ul, li, input, i, txtValue;
+    input = document.getElementById(inputTag);
+    filter = input.value.toUpperCase();
+    select = document.getElementById(ListTagParent);
+    options = select.getElementsByTagName('option');
+
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < options.length; i++) {
+        txtValue = options[i].textContent || options[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        options[i].style.display = "";
+        } else {
+        options[i].style.display = "none";
+        }
+    }
+}
+</script>
