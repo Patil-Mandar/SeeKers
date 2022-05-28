@@ -1,10 +1,77 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
 
+<div class="text-center">
+    <h2>
+        <span id="greeting"></span>,
+        <span><%= user.username %></span>
+    </h2>
+</div>
+<% if(user.jobs.length>0){ %>
+    <div class="row my-3">
+        <% for(let job of user.jobs){ %>
+            <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg">
+                <div class="card-body">
+                    <div class="mt-3">
+                        <h4 class="card-title fw-bold d-inline">
+                            <%= job.jobTitle %> <span class="card-title fs-5 text-muted fw-bold">(<%= job.company %>)</span>
+                        </h4>
+                        <hr class="m-1">
+                        <div class="row">
+                            <div class="col-md-6 col-12 mt-1">
+                                <span class="card-text text-muted ">Category:</span>
+                                <span class="card-text fs-6">
+                                    <%= job.category %>
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-12 mt-1">
+                                <span class="card-text text-muted ">Location:</span>
+                                <span class="card-text fs-6 ">
+                                    <%= job.location %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-12 mt-1">
+                                <span class="card-text text-muted ">Type:</span>
+                                <span class="card-text fs-6 ">
+                                    <%= job.type %>
+                                </span>
+                            </div>
+                            <div class="col-md-3 col-12 mt-1">
+                                <span class="card-text text-muted ">Mode:</span>
+                                <span class="card-text fs-6 ">
+                                    <%= job.mode %>
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-12 mt-1">
+                                <span class="card-text text-muted ">Salary:</span>
+                                <span class="card-text fs-6 ">
+                                    <%= job.salary %> Rupees / month
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <a href='/recruiter/job/<%= job._id %>' class="btn btn-outline-primary btn-sm mt-3">View</a>
+                    </div>
+                </div>
+            </div>
+        <%}%>
+    </div>
+<% }else{ %>
+        <h4 class="my-5 text-center text-muted">No Jobs Created Yet</h4>
+<% } %>
 
+<div class="text-center">
+    <a href="/recruiter/job/new" class="btn btn-primary">Add a Job</a>
+</div>
+
+
+<!-- 
     <h1>Recuiter</h1>
     <p><%= user.username %></p>
 
-    <% if(numberOfJobs){ %>
+    <% if(user.length>0){ %>
         <% for(let job of user.jobs){ %>
             <p><%= job %></p>
             <a href='/recruiter/job/<%= job._id %>'>View</a>
@@ -12,7 +79,18 @@
     <% }else{ %>
         <p>No Jobs created</p>
     <% } %>
-    <br>
-    <a href="/recruiter/job/new">Add Job</a>
+    <br> -->
 
+    <script>
+        const greeting = document.getElementById("greeting");
+        const hour = new Date().getHours();
+        const welcomeTypes = ["Good morning", "Good afternoon", "Good evening"];
+        let welcomeText = "";
+
+        if (hour < 12) welcomeText = welcomeTypes[0];
+        else if (hour < 18) welcomeText = welcomeTypes[1];
+        else welcomeText = welcomeTypes[2];
+
+        greeting.innerHTML = welcomeText;
+    </script>
     

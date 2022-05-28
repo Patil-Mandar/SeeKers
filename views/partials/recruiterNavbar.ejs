@@ -7,11 +7,15 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link" href="/recruiter">Home</a>
+          <a class="nav-link" href="/recruiter/jobs">Explore Profiles</a>
+          <% if(currentUser){ %> 
+            <a class="nav-link" href="/recruiter/dashboard">Dashboard</a>
+          <% } %> 
         </div>
         <div class="navbar-nav ms-auto">
           <% if(!currentUser){ %> 
-          <a class="btn btn-outline-light mx-2" href="/recruiter/login">LogIn</a>
-          <a class="btn btn-success mx-2" href="/recruiter/register">Register</a>
+          <a class="btn btn-outline-light mx-2 my-2 my-md-1" href="/recruiter/login">LogIn</a>
+          <a class="btn btn-success mx-2 my-2 my-md-1" href="/recruiter/register">Register</a>
           <% }else{ %> 
           <a class="btn btn-outline-light" href="/recruiter/logout">Log Out</a>
           <% } %> 

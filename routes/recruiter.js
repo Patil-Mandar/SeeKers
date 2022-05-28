@@ -20,8 +20,7 @@ router.get('/logout', recruiter.logout)
 
 router.get('/dashboard',async (req, res) => {
     const user = await Recruiter.findById(req.user._id).populate('jobs')
-    const numberOfJobs = user.jobs.length
-    res.render('recruiter/dashboard', { user, numberOfJobs })
+    res.render('recruiter/dashboard', { user })
 })
 
 module.exports = router
