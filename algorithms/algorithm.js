@@ -70,6 +70,7 @@ const recommendKjobs = async (user, k) => {
     })
     preferenceList = Object.entries(preferenceList)
     hybridSort(preferenceList,0,preferenceList.length-1)
+    preferenceList.reverse()
     return preferenceList.slice(-k)
 }
 
@@ -85,8 +86,10 @@ const recommendKusers = async (job, k) => {
     canditateSet.forEach((user) => {
         preferenceList[user.id] = preference(user, job)
     })
-    preferenceList = Object.entries(preferenceList).sort((a, b) => b[1] - a[1])
-    return preferenceList.slice(0, k)
+    preferenceList = Object.entries(preferenceList)
+    hybridSort(preferenceList,0,preferenceList.length-1)
+    preferenceList.reverse()
+    return preferenceList.slice(-k)
 }
 
 module.exports = { recommendKjobs,recommendKusers}
