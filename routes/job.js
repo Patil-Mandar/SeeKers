@@ -42,6 +42,18 @@ router.get('/:id/analysis',CatchAsync(async(req,res)=>{
     res.render('job/analysis',{profiles})
 }))
 
+router.get('/:id/edit',CatchAsync(async(req,res)=>{
+    const {id} = req.params
+    const job = await Job.findById(id)
+    res.render('job/edit',{job,listOfData})
+}))
+
+router.put('/:id',CatchAsync(async(req,res)=>{
+    const {id} = req.params
+    await Job.findByIdAndUpdate(id, {...req.body.job})
+    res.redirect(`/recruiter/job/${id}`)
+}))
+
 router.delete('/:id',CatchAsync(async(req,res)=>{
     const {id} = req.params
     await Recruiter.findByIdAndUpdate(req.user._id, {$pull:{jobs:id}}) //pull(remove element from array) will remove the review with id reviewid

@@ -2,12 +2,12 @@
 
 
 <div class="text-center">
-    <h2>Create Job</h2>
+    <h2>Edit Job</h2>
 </div>
 <div class="row">
     <div class="card shadow-lg my-3 col-lg-8 col-10 offset-1 offset-lg-2">
         <div class="card-body">
-            <form id="regForm" action="/recruiter/job" method="POST">
+            <form id="regForm" action="/recruiter/job/<%= job._id %>?_method=PUT" method="POST">
     
                 <!-- One "tab" for each step in the form: -->
                 <div class="tab" style="display: none;">
@@ -17,13 +17,14 @@
                             <label for="company" class="form-label">Company Name</label>
                             <select class="form-select" name="job[company]" id="company" >
                                 <% for(let ele of listOfData.companies){ %>
-                                    <option value="<%= ele %>"><%= ele %></option>
+                                    <option value="<%= ele %>" <% if(ele == job.company){%> selected <%}%>
+                                        ><%= ele %></option>
                                 <% } %>
                             </select>
                         </div>
                         <div class="mb-3 col-sm col-12">
                             <label for="jobTitle" class="form-label">Job Title</label>
-                            <input class="form-control" type="text" id="jobTitle" name="job[jobTitle]" >
+                            <input class="form-control" type="text" id="jobTitle" name="job[jobTitle]" value="<%= job.jobTitle%>">
                         </div>
                     </div>
                     <div class="row">
@@ -31,7 +32,8 @@
                             <label for="category" class="form-label">Category</label>
                             <select class="form-select" name="job[category]" id="category" >
                                 <% for(let ele of listOfData.categories){ %>
-                                    <option value="<%= ele %>"><%= ele %></option>
+                                    <option value="<%= ele %>" <% if(ele == job.category){%> selected <%}%>
+                                        ><%= ele %></option>
                                 <% } %>
                             </select>
                         </div>
@@ -39,7 +41,8 @@
                             <label for="type" class="form-label">Type</label>
                             <select class="form-select" name="job[type]" id="type" >
                                 <% for(let ele of listOfData.types){ %>
-                                    <option value="<%= ele %>"><%= ele %></option>
+                                    <option value="<%= ele %>" <% if(ele == job.type){%> selected <%}%>
+                                        ><%= ele %></option>
                                 <% } %>
                             </select>
                         </div>
@@ -47,7 +50,8 @@
                             <label class="form-label" for="location">Location</label>
                             <select class="form-select" name="job[location]" id="location" >
                                 <% for(let ele of listOfData.locations){ %>
-                                    <option value="<%= ele %>"><%= ele %></option>
+                                    <option value="<%= ele %>" <% if(ele == job.location){%> selected <%}%>
+                                        ><%= ele %></option>
                                 <% } %>
                             </select>
                         </div>
@@ -55,17 +59,18 @@
                     <div class="row">
                         <div class="mb-3 col-sm-6 col-12">
                             <label for="mailID" class="form-label">Mail ID</label>
-                            <input class="form-control" type="text" id="mailID" name="job[mailID]" value="<%= currentUser.emailID %>">
+                            <input class="form-control" type="text" id="mailID" name="job[mailID]" value="<%= job.mailID %>">
                         </div>
                         <div class="mb-3 col-sm-3 col-12">
                             <label for="salary" class="form-label">Salary</label>
-                            <input class="form-control" type="number" id="salary" name="job[salary]" placeholder="in rupees per month">
+                            <input class="form-control" type="number" id="salary" name="job[salary]" placeholder="in rupees per month" value="<%= job.salary %>"">
                         </div>
                         <div class="mb-3 col-sm-3 col-12">
                             <label for="mode" class="form-label">Mode</label>
                             <select class="form-select" name="job[mode]" id="mode" >
                                 <% for(let ele of listOfData.modes){ %>
-                                    <option value="<%= ele %>"><%= ele %></option>
+                                    <option value="<%= ele %>" <% if(ele == job.mode){%> selected <%}%>
+                                        ><%= ele %></option>
                                 <% } %>
                             </select>
                         </div>   
@@ -78,11 +83,11 @@
                     <div class="row">
                         <div class="mb-3 col-sm-6 col-12">
                             <label for="minAge" class="form-label">Min Age</label>
-                            <input class="form-control" type="number" id="minAge" name="job[minAge]"%>">
+                            <input class="form-control" type="number" id="minAge" name="job[minAge]" value="<%= job.minAge %>">
                         </div>
                         <div class="mb-3 col-sm-6 col-12">
                             <label for="minExperience" class="form-label">Min Experience</label>
-                            <input class="form-control" type="number" id="minExperience" name="job[minExperience]"%>">
+                            <input class="form-control" type="number" id="minExperience" name="job[minExperience]" value="<%= job.minExperience %>">
                         </div>
                     </div>
                     <div class="row">
@@ -167,7 +172,7 @@ function showTab(n) {
     document.getElementById("prevBtn").style.display = "inline";
   }
   if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Create";
+    document.getElementById("nextBtn").innerHTML = "Save";
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
   }
