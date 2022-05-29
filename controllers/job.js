@@ -17,6 +17,7 @@ module.exports.createNewJob = CatchAsync(async (req, res) => {
     const user = req.user
     user.jobs.push(job._id)
     await Recruiter.findByIdAndUpdate(user._id,user)
+    req.flash('success','New Job Added')
     res.redirect(`/recruiter/job/${job._id}`)
 })
 
@@ -35,6 +36,7 @@ module.exports.renderEditJobForm = CatchAsync(async(req,res)=>{
 module.exports.editJob = CatchAsync(async(req,res)=>{
     const {id} = req.params
     await Job.findByIdAndUpdate(id, {...req.body.job})
+    req.flash('success','Job Edited')
     res.redirect(`/recruiter/job/${id}`)
 })
 
@@ -54,5 +56,6 @@ module.exports.deleteJob =  CatchAsync(async (req, res) => {
     const { id } = req.params
     await Recruiter.findByIdAndUpdate(req.user._id, { $pull: { jobs: id } }) //pull(remove element from array) will remove the review with id reviewid
     await Job.findByIdAndDelete(id)
+    req.flash('error','Job deleted')
     res.redirect('/recruiter/dashboard')
 })

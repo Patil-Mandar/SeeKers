@@ -16,6 +16,7 @@ module.exports.createNewProfile = CatchAsync(async (req, res) => {
     const user = req.user
     user.profile = profile._id
     await Jobseeker.findByIdAndUpdate(user._id, user)
+    req.flash('success','Created the Profile')
     res.redirect('/dashboard/')
 })
 
@@ -30,6 +31,7 @@ module.exports.editProfile = CatchAsync(async (req, res) => {
     const newProfile = req.body.profile
     if (!newProfile.jobHistory) newProfile.jobHistory = []
     await Profile.findByIdAndUpdate(id, { ...req.body.profile })
+    req.flash('success','Profile edited')
     res.redirect(`/dashboard/`)
 })
 

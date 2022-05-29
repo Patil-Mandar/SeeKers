@@ -31,11 +31,13 @@ module.exports.renderLoginForm = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
+    req.flash('success','Welcome Back')
     res.redirect('/recruiter/dashboard')
 }
 
 module.exports.logout = CatchAsync(async (req, res) => {
     req.logOut();
+    req.flash('warning','Sayonara')
     res.redirect('/recruiter')
 })
 

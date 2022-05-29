@@ -89,7 +89,7 @@ const recommendKusers = async (job, k) => {
     return preferenceList.slice(0, k)
 }
 
-module.exports = { recommendKjobs,recommendKusers }
+module.exports = { recommendKjobs,recommendKusers,isEligible }
 
 //testing of algorithm
 // const test = async ()=>{

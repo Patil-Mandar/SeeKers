@@ -1,10 +1,18 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
 
 <div class="text-center">
-    <h2>Top 5 Profiles for your job</h2>
+    <h2>Top Profiles for your job</h2>
 </div>
 
 <div class="row my-3" id="jobList">
+    <% if(profiles.length == 0){ %>
+        <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg text-center bg-primary text-light">
+            <div class="card-body">
+                <h1 class="card-title">Sorry, No match was found :(</h1>
+                <h5 class="card-text">We will try to collect more data next time</h5>
+            </div>
+        </div>
+    <% } %> 
     <% for(let i=0;i<profiles.length;i++){ %>
         <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg">
             <div class="card-body">
@@ -132,10 +140,3 @@
         </div>
     <% } %> 
 </div>
-
-<!-- 
-<ol>
-<% for(let profile of profiles){ %>
-<li><%=profile%></li>
-<%}%>
-</ol>     -->
