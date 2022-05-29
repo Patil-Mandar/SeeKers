@@ -11,16 +11,12 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 const LocalStrategy = require('passport-local')
 
 const ExpressError = require('./utils/ExpressError')
-const CatchAsync = require('./utils/CatchAsync')
 const Jobseeker = require('./models/jobseeker')
-const Profile = require('./models/profile')
-const Job = require('./models/job')
 const Recruiter = require('./models/recruiter')
 const profileRoutes = require('./routes/profile')
 const recruiterRoutes = require('./routes/recruiter')
 const jobseekerRoutes = require('./routes/jobseeker')
 const jobRoutes = require('./routes/job')
-const { validateProfile, isLoggedIn, createdProfile } = require('./middleware')
 
 
 
@@ -43,7 +39,7 @@ app.use(methodOverride('_method'))
 
 //session config
 const sessionConfig = {
-    secret: 'thisshouldbeabettersecret!',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -95,12 +91,6 @@ app.use('/recruiter', recruiterRoutes)
 app.use('/profile', profileRoutes)
 app.use('/recruiter/job', jobRoutes)
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
-app.get('/recruiter', (req, res) => {
-    res.render('recruiter/home')
-})
 
 
 //to resposne all undefined routes

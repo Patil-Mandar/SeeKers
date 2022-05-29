@@ -1,7 +1,7 @@
-<% if(currentUser.photo){ %> 
-    <% layout('/layouts/boilerplate')  %> 
+<% if(currentUser && currentUser.salt){ %> 
+    <% layout('/layouts/recruiterBoilerplate')  %> 
 <% }else{ %> 
-        <% layout('/layouts/recruiterBoilerplate')  %> 
+        <% layout('/layouts/boilerplate')  %> 
 <% } %> 
 
 <div class="row">
