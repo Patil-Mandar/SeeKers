@@ -1,6 +1,7 @@
 const { similarity } = require('./similarityAlgo')
 const Job = require('../models/job')
 const Profile = require('../models/profile')
+const hybridSort = require('./hybridQuickSort')
 
 let Jobs = []
 let Users = []
@@ -67,9 +68,9 @@ const recommendKjobs = async (user, k) => {
     canditateSet.forEach((job) => {
         preferenceList[job.id] = preference(user, job)
     })
-    preferenceList = Object.entries(preferenceList).sort((a, b) => b[1] - a[1])
-
-    return preferenceList.slice(0, k)
+    preferenceList = Object.entries(preferenceList)
+    hybridSort(preferenceList,0,preferenceList.length-1)
+    return preferenceList.slice(-k)
 }
 
 
@@ -85,16 +86,15 @@ const recommendKusers = async (job, k) => {
         preferenceList[user.id] = preference(user, job)
     })
     preferenceList = Object.entries(preferenceList).sort((a, b) => b[1] - a[1])
-
     return preferenceList.slice(0, k)
 }
 
-module.exports = { recommendKjobs,recommendKusers,isEligible }
+module.exports = { recommendKjobs,recommendKusers}
 
-//testing of algorithm
+// // testing of algorithm
 // const test = async ()=>{
-//     const job = await Job.find({})
-//     const ans = await recommendKusers(job[1],5)
+//     const profile = await Profile.find({})
+//     const ans = await recommendKjobs(profile[1001],5)
 //     console.log(ans)
 // }
 
