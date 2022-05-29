@@ -1,5 +1,64 @@
-<% layout('/layouts/recruiterBoilerplate')  %> 
+<!DOCTYPE html>
+<html lang="en">
 
-    <h1>HOME PAGE FOR RECRUITER</h1>
-    <p>Explain the process</p>
-    <a href="/">I'm a Job Seeker</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeeKers | Recruiter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/home.css">
+</head>
+
+<body class="d-flex text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-none fixed-top">    <!-- sticky-top -->
+                    <div class="container-lg">
+                      <a class="navbar-brand fs-5 fw-bold" href="">SeeKers <span class="fs-6 fw-normal">| Recruiter</span></a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                          <a class="nav-link" href="/recruiter">Home</a>
+                          <a class="nav-link" href="/recruiter/profiles">Explore Profiles</a>
+                          <% if(currentUser){ %> 
+                            <a class="nav-link" href="/recruiter/dashboard">Dashboard</a>
+                          <% } %> 
+                        </div>
+                        <div class="navbar-nav ms-auto">
+                          <% if(!currentUser){ %> 
+                          <a class="btn btn-outline-light mx-2 my-2 my-md-1" href="/recruiter/login">LogIn</a>
+                          <a class="btn btn-success mx-2 my-2 my-md-1" href="/recruiter/register">Register</a>
+                          <% }else{ %> 
+                          <a class="btn btn-outline-light" href="/recruiter/logout">Log Out</a>
+                          <% } %> 
+                        </div>
+                      </div>
+                    </div>
+                  </nav>
+            </div>
+        </header>
+        <main class="container-fluid">
+            <h1>SeeKers</h1>
+            <div class="lead">Welcome to SeeKers</div>
+            <div class="lead">Find top profiles for your job in just few clicks</div>
+               </p>
+            <a href="/recruiter/login" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">Get Started</a>
+            <a href="/" class="btn btn-lg text-light border-b">Looking for Job &#8594;</a>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <h6 class="d-inline">Mandar Patil</h6>
+            <p class="d-inline">&copy; 2022 </p>
+        </footer>
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+
+</html>

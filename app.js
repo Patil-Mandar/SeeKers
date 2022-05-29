@@ -86,6 +86,7 @@ app.use((req, res, next) => {
     next()
 })
 
+//routers
 app.use('/', jobseekerRoutes)
 app.use('/recruiter', recruiterRoutes)
 app.use('/profile', profileRoutes)

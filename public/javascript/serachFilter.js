@@ -1,5 +1,4 @@
 function serachFilter(inputTag,ListTagParent) {
-    // Declare variables
     var input, filter, ul, li, input, i, txtValue;
     input = document.getElementById(inputTag);
     filter = input.value.toUpperCase();

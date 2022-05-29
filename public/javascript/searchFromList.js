@@ -1,5 +1,4 @@
 function searchFromList() {
-    // Declare variables
     var input, filter, ul, li, input, i, txtValue;
     input = document.getElementById('myInput');
     filter = input.value.toUpperCase();

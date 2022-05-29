@@ -4,6 +4,7 @@ const Job = require('./models/job')
 const CatchAsync = require('./utils/CatchAsync')
 
 module.exports.validateProfile = (req, res, next) => {
+    //checks the profile data
     const { error } = profileSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
@@ -14,6 +15,7 @@ module.exports.validateProfile = (req, res, next) => {
 }
 
 module.exports.validateJob = (req,res,next)=>{
+    //checks the job data
     const { error } = jobSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
@@ -42,6 +44,7 @@ module.exports.isLoggedInAsRecruiter = (req, res, next) => {
 }
 
 module.exports.hasCreatedProfile = (req,res,next)=>{
+    //checkes if jobseeker has created profile or not
     if(req.user.profile){
         next();
     }else{
@@ -51,6 +54,7 @@ module.exports.hasCreatedProfile = (req,res,next)=>{
 }
 
 module.exports.isAuthorOfJob = CatchAsync(async (req,res,next)=>{
+    //checkes if job was created by this recruiter or not
     const {id} = req.params
     const job = await Job.findById(id)
     if(job.author == req.user._id){
