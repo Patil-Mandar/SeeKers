@@ -2,12 +2,12 @@
 
 <div class="text-center row">
     <div class="col-2 offset-1 col-md-6 offset-md-2">
-        <input id="myInput" type="text" class="form-control rounded-50" placeholder="Search" onkeyup="myFunction()">
+        <input id="myInput" type="text" class="form-control rounded-50" placeholder="Search" onkeyup="searchFromList()">
     </div>
     <button class="btn btn-primary col-2 col-md-2" onclick="sortListDir()">Sort by Salary</button>
 </div>
 
-<div class="row my-3" id="jobList">
+<div class="row my-3" id="list">
     <% for(let job of jobs){ %>
         <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg">
             <div class="card-body">
@@ -60,7 +60,7 @@
 </div>
 
 <script>
-    function myFunction() {
+    function searchFromList() {
     // Declare variables
     var input, filter, ul, li, input, i, txtValue;
     input = document.getElementById('myInput');
@@ -81,7 +81,7 @@
 
   function sortListDir() {
   var jobs, i, switching, jobs, shouldSwitch, dir, switchcount = 0;
-  jobs = document.getElementById("jobList").children;
+  jobs = document.getElementById("list").children;
   switching = true;
   // Set the sorting direction to ascending:
   dir = "asc";

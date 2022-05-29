@@ -1,16 +1,18 @@
 <% layout('/layouts/recruiterBoilerplate')  %> 
 
 <div class="text-center">
-    <h2>Top 5 Profiles for your job</h2>
+        <h2>Top 5 Profiles for your job</h2>
 </div>
 
-<div class="row my-3" id="jobList">
+<div class="text-center row">
+    <div class="col-10 offset-1 col-md-8 offset-md-2">
+        <input id="myInput" type="text" class="form-control rounded-50" placeholder="Search" onkeyup="searchFromList()">
+    </div>
+</div>
+<div class="row my-3" id="list">
     <% for(let i=0;i<profiles.length;i++){ %>
         <div class="card col-10 offset-1 col-md-8 offset-md-2 my-4 shadow-lg">
             <div class="card-body">
-                <h4 class="card-title text-center">
-                    #<%=i+1%>
-                </h4>
                 <div class="mt-3">
                     <h4 class="card-title fw-bold d-inline">
                         <%= profiles[i].name %>
@@ -133,9 +135,23 @@
     <% } %> 
 </div>
 
-<!-- 
-<ol>
-<% for(let profile of profiles){ %>
-<li><%=profile%></li>
-<%}%>
-</ol>     -->
+<script>
+    function searchFromList() {
+    // Declare variables
+    var input, filter, ul, li, input, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    jobs = document.getElementById("list").children;
+    
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < jobs.length; i++) {
+        txtValue = jobs[i].textContent || jobs[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        jobs[i].style.display = "";
+        } else {
+        jobs[i].style.display = "none";
+        }
+    }
+}
+</script>

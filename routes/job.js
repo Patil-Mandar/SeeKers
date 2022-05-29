@@ -36,7 +36,7 @@ router.get('/:id/analysis',CatchAsync(async(req,res)=>{
     const preferenceList = await recommendKusers(job,5)
     const profiles = []
     for(let i of preferenceList){
-        let profile = await Profile.findById(i[0])
+        let profile = await Profile.findById(i[0]).populate('jobHistory')
         profiles.push(profile)
     }
     res.render('job/analysis',{profiles})

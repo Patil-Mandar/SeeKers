@@ -2,6 +2,7 @@ const express = require('express')
 const CatchAsync = require('../utils/CatchAsync')
 const recruiter = require('../controllers/recruiter')
 const Recruiter = require('../models/recruiter')
+const Profile = require('../models/profile')
 const passport = require('passport')
 const router = express.Router()
 
@@ -22,5 +23,10 @@ router.get('/dashboard',async (req, res) => {
     const user = await Recruiter.findById(req.user._id).populate('jobs')
     res.render('recruiter/dashboard', { user })
 })
+
+router.get('/profiles',CatchAsync(async(req,res)=>{
+    const profiles = await Profile.find({}).populate('jobHistory')
+    res.render('recruiter/allProfiles',{profiles})
+}))
 
 module.exports = router
