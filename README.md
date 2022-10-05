@@ -5,11 +5,11 @@
 
 1. Clone repo to local machine
 2. Open terminal in the main directory
-3. run npm install
-4. run mongod
-5. run mongo
-6. run node seeds/seed.js
-7. run npm start
+3. run `npm install`
+4. run `mongod`
+5. run `mongo`
+6. run `node seeds/seed.js`
+7. run `npm start`
 
 ![image](https://user-images.githubusercontent.com/76464970/170881969-ba9feaab-f1a8-4874-9793-d49f1c055e62.png)
 
